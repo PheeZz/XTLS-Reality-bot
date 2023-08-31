@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "xray-vless-bot"
+version = "0.1.0"
+description = ""
+authors = ["pheezz <jagubkoff@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+aiogram = "^2.25.1"
+aiofiles = "^23.2.1"
+python-dotenv = "^1.0.0"
+asyncpg = "^0.28.0"
+loguru = "^0.7.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
