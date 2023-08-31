@@ -1,0 +1,18 @@
+{
+    "message": {
+        "greeting": {
+            "en": "Hello, {user}!",
+            "ru": "Привет, {user}!"
+        }
+    },
+    "button": {
+        "pc": {
+            "en": "PC",
+            "ru": "ПК"
+        },
+        "mobile": {
+            "en": "Smartphone",
+            "ru": "Смартфон"
+        }
+    }
+}
