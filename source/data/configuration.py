@@ -25,9 +25,9 @@ class Configuration:
         ] = self._get_database_connection_parameters()
 
     def _get_bot_token(self) -> str:
-        bot_token = getenv("BOT_TOKEN")
+        bot_token = getenv("TG_BOT_TOKEN")
         if not bot_token:
-            raise DotEnvVariableNotFound("BOT_TOKEN")
+            raise DotEnvVariableNotFound("TG_BOT_TOKEN")
         return bot_token
 
     def _get_server_cfg_path(self) -> str:
