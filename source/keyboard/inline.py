@@ -59,27 +59,27 @@ async def add_buttons_for_admin_main_menu(
 
 
 async def admin_payment_notification_keyboard(
-    language_code: str,
-    from_user_id: int,
+    language_code: str, from_user_id: int, is_payment_checked: bool = False
 ) -> InlineKeyboardMarkup:
     keyboard = InlineKeyboardMarkup(row_width=2)
-    buttons = [
-        InlineKeyboardButton(
-            text=localizer.get_user_localized_text(
-                user_language_code=language_code,
-                text_localization=localizer.button.accept,
+    if not is_payment_checked:
+        buttons = [
+            InlineKeyboardButton(
+                text=localizer.get_user_localized_text(
+                    user_language_code=language_code,
+                    text_localization=localizer.button.accept,
+                ),
+                callback_data=f"accept_payment_{from_user_id}",
             ),
-            callback_data=f"accept_payment_{from_user_id}",
-        ),
-        InlineKeyboardButton(
-            text=localizer.get_user_localized_text(
-                user_language_code=language_code,
-                text_localization=localizer.button.reject,
+            InlineKeyboardButton(
+                text=localizer.get_user_localized_text(
+                    user_language_code=language_code,
+                    text_localization=localizer.button.reject,
+                ),
+                callback_data=f"reject_payment_{from_user_id}",
             ),
-            callback_data=f"reject_payment_{from_user_id}",
-        ),
-    ]
-    keyboard.add(*buttons)
+        ]
+        keyboard.add(*buttons)
 
     additional_buttons = [
         InlineKeyboardButton(

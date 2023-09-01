@@ -12,6 +12,7 @@ aiofiles = "^23.2.1"
 python-dotenv = "^1.0.0"
 asyncpg = "^0.28.0"
 loguru = "^0.7.0"
+qrcode = {extras = ["pil"], version = "^7.4.2"}
 
 
 [build-system]

@@ -29,3 +29,23 @@ class LocalizedMessageText(BaseLocalizedObject):
     @property
     def admin_notification_about_new_payment(self) -> LocalizedText:
         return self._get_entity_text("admin_notification_about_new_payment")
+
+    @property
+    def payment_accepted_for_admin(self) -> LocalizedText:
+        return self._get_entity_text("payment_accepted_for_admin")
+
+    @property
+    def payment_accepted_for_user(self) -> LocalizedText:
+        return self._get_entity_text("payment_accepted_for_user")
+
+    @property
+    def error_while_accepting_payment(self) -> LocalizedText:
+        return self._get_entity_text("error_while_accepting_payment")
+
+    @property
+    def reject_payment(self) -> LocalizedText:
+        return self._get_entity_text("reject_payment")
+
+    @property
+    def user_info(self) -> LocalizedText:
+        return self._get_entity_text("user_info")

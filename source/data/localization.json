@@ -19,6 +19,26 @@
         "admin_notification_about_new_payment": {
             "en": "User <code>{username}</code> (id:<code>{user_id}</code>) paid for a subscription",
             "ru": "Пользователь <code>{username}</code> (id:<code>{user_id}</code>) оплатил подписку"
+        },
+        "payment_accepted_for_admin": {
+            "en": "✅ Payment accepted, user has been given a subscription for <b>{days}</b> days",
+            "ru": "✅ Оплата принята, пользователю выдана подписка на <b>{days}</b> дней"
+        },
+        "payment_accepted_for_user": {
+            "en": "✅ Payment accepted, you have been given a subscription for <b>{days}</b> days",
+            "ru": "✅ Оплата принята, вам выдана подписка на <b>{days}</b> дней"
+        },
+        "error_while_accepting_payment": {
+            "en": "❌ Error while accepting payment",
+            "ru": "❌ Ошибка при принятии оплаты"
+        },
+        "reject_payment": {
+            "en": "❌ Payment rejected",
+            "ru": "❌ Оплата отклонена"
+        },
+        "user_info": {
+            "en": "👤User: {user_id}\n👤Username: {user_username}\n\n🤕Has access to the bot: {is_not_banned}\n\n🗓️Subscription status: {is_active_subscription}\n🗓️When the subscription ends: {subscription_end_date}\n\n📄Active configs: {configs_count}\n📄Total bonus configs: {bonus_configs_count}\n📄Available configs for generation: {unused_configs_count}\n\n📅Registration date: {created_at}",
+            "ru": "👤Пользователь: {user_id}\n👤Username: {user_username}\n\n🤕Есть доступ к боту: {is_not_banned}\n\n🗓️Статус подписки: {is_active_subscription}\n🗓️Когда заканчивается подписка: {subscription_end_date}\n\n📄Активных конфигов: {configs_count}\n📄Всего бонусных конфигов: {bonus_configs_count}\n📄Доступно конфигов для генерации: {unused_configs_count}\n\n📅Дата регистрации: {created_at}"
         }
     },
     "button": {
