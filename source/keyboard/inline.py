@@ -2,6 +2,7 @@ from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 from source.data import config
 from source.utils import localizer
+from loader import db_manager
 
 
 async def start_menu_kb(language_code: str, user_id: int):
@@ -100,4 +101,55 @@ async def admin_payment_notification_keyboard(
     for button in additional_buttons:
         keyboard.add(button)
 
+    return keyboard
+
+
+async def insert_button_back_to_main_menu(
+    keyboard: InlineKeyboardMarkup | None = None, language_code: str = "ru"
+):
+    if not keyboard:
+        keyboard = InlineKeyboardMarkup(row_width=1)
+    keyboard.add(
+        InlineKeyboardButton(
+            text=localizer.get_user_localized_text(
+                user_language_code=language_code,
+                text_localization=localizer.button.back_to_main_menu,
+            ),
+            callback_data="back_to_main_menu",
+        )
+    )
+    return keyboard
+
+
+async def user_configs_list_keyboard(
+    user_id: int, language_code: str
+) -> InlineKeyboardMarkup:
+    users_configs = await db_manager.get_user_config_names_and_uuids(user_id=user_id)
+    keyboard = InlineKeyboardMarkup(row_width=2)
+    is_user_can_generate_new_config = (
+        await db_manager.how_much_more_configs_user_can_create(user_id=user_id)
+    ) > 0
+    if is_user_can_generate_new_config:
+        create_new_config_button = InlineKeyboardButton(
+            text=localizer.get_user_localized_text(
+                user_language_code=language_code,
+                text_localization=localizer.button.create_new_config,
+            ),
+            callback_data="create_new_config",
+        )
+        keyboard.insert(create_new_config_button)
+
+    if users_configs:
+        exist_configs_buttons = [
+            InlineKeyboardButton(
+                text=config.config_name,
+                callback_data=f"show_config_{config.config_uuid}",
+            )
+            for config in users_configs
+        ]
+        keyboard.add(*exist_configs_buttons)
+
+    keyboard = await insert_button_back_to_main_menu(
+        keyboard=keyboard, language_code=language_code
+    )
     return keyboard

@@ -13,3 +13,11 @@ class User:
     bonus_configs_count: int
     unused_configs_count: int
     created_at: datetime
+
+
+@dataclass
+class VpnConfigDB:
+    config_id: int
+    user_id: int
+    config_name: str
+    config_uuid: str

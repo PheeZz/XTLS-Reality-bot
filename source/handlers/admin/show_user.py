@@ -8,6 +8,8 @@ from loader import db_manager
 
 async def show_info_about_user_by_button(call: types.CallbackQuery, state: FSMContext):
     user_id = call.data.split("_")[-1]
+    if not user_id:
+        await request_user_id_or_username(call=call)
     user = await db_manager.get_user_by_id(user_id=user_id)
     await call.message.answer(
         text=localizer.get_user_localized_text(
@@ -30,3 +32,7 @@ async def show_info_about_user_by_button(call: types.CallbackQuery, state: FSMCo
         #     user_id=user_id,
         # ),
     )
+
+
+async def request_user_id_or_username(call: types.CallbackQuery):
+    ...

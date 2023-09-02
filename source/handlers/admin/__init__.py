@@ -1,6 +1,4 @@
-from loader import dp
 from aiogram import Dispatcher
-from aiogram.types import ContentType
 from loguru import logger
 
 from .accept_payment import *

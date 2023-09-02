@@ -27,6 +27,9 @@ class Configuration:
         self._xray_publickey: str = self._get_xray_publickey()
         self._xray_shortid: str = self._get_xray_shortid()
         self._xray_config_path: str = self._get_xray_config_path()
+        self._default_max_configs_count: int = (
+            self._get_user_default_max_configs_count()
+        )
         self._server_ip: str = self._get_server_ip()
 
     def _get_bot_token(self) -> str:
@@ -64,6 +67,12 @@ class Configuration:
         if not subscription_monthly_price:
             raise DotEnvVariableNotFound("BASE_SUBSCRIPTION_MONTHLY_PRICE")
         return subscription_monthly_price
+
+    def _get_user_default_max_configs_count(self) -> int:
+        user_default_max_configs_count = getenv("USER_DEFAULT_MAX_CONFIGS_COUNT")
+        if not user_default_max_configs_count:
+            raise DotEnvVariableNotFound("USER_DEFAULT_MAX_CONFIGS_COUNT")
+        return int(user_default_max_configs_count)
 
     def _get_database_connection_parameters(self) -> dict[str, str]:
         for parameter in [
@@ -108,6 +117,7 @@ class Configuration:
             raise RuntimeError(
                 "Server ip not found. Check your internet connection and curl package installation"
             )
+        return server_ip
 
     @property
     def bot_token(self) -> str:
@@ -142,12 +152,16 @@ class Configuration:
         return self._xray_publickey
 
     @property
-    def xray_shorid(self) -> str:
+    def xray_shortid(self) -> str:
         return self._xray_shortid
 
     @property
     def xray_config_path(self) -> str:
         return self._xray_config_path
+
+    @property
+    def default_max_configs_count(self) -> int:
+        return self._default_max_configs_count
 
     @property
     def server_ip(self) -> str:

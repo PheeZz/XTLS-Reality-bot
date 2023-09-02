@@ -49,3 +49,23 @@ class LocalizedMessageText(BaseLocalizedObject):
     @property
     def user_info(self) -> LocalizedText:
         return self._get_entity_text("user_info")
+
+    @property
+    def user_configs_list(self) -> LocalizedText:
+        return self._get_entity_text("user_configs_list")
+
+    @property
+    def no_configs_found_create_new_one(self) -> LocalizedText:
+        return self._get_entity_text("no_configs_found_create_new_one")
+
+    @property
+    def request_config_name(self) -> LocalizedText:
+        return self._get_entity_text("request_config_name")
+
+    @property
+    def got_config_name_start_generating(self) -> LocalizedText:
+        return self._get_entity_text("got_config_name_start_generating")
+
+    @property
+    def config_generated(self) -> LocalizedText:
+        return self._get_entity_text("config_generated")

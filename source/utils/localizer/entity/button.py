@@ -57,3 +57,11 @@ class LocalizedButtonText(BaseLocalizedObject):
     @property
     def delete_keyboard(self) -> LocalizedText:
         return self._get_entity_text("delete_keyboard")
+
+    @property
+    def create_new_config(self) -> LocalizedText:
+        return self._get_entity_text("create_new_config")
+
+    @property
+    def back_to_main_menu(self) -> LocalizedText:
+        return self._get_entity_text("back_to_main_menu")

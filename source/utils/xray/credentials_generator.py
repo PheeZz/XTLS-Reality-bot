@@ -1,4 +1,6 @@
 import os
+import random
+import string
 
 
 class CredentialsGenerator:
