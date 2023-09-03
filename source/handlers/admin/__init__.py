@@ -3,8 +3,11 @@ from loguru import logger
 
 from .accept_payment import *
 from .reject_payment import *
-from .show_user import *
 from .delete_keyboard import *
+from .answer_support import *
+
+from .show_user import register_admin_show_user_handlers
+from source.utils.callback import support_callback
 
 
 def register_admin_handlers(dp: Dispatcher):
@@ -24,10 +27,23 @@ def register_admin_handlers(dp: Dispatcher):
             lambda call: call.data.startswith("delete_keyboard"),
             state="*",
         )
+
         dp.register_callback_query_handler(
-            show_info_about_user_by_button,
-            lambda call: call.data.startswith("show_user_"),
+            ask_admin_for_support_answer,
+            # allow any callback data with support_callback
+            support_callback.filter(),
             state="*",
         )
+
+        dp.register_message_handler(
+            send_support_answer_to_user,
+            state=AnswerSupport.wait_for_support_answer,
+        )
+
+        register_admin_show_user_handlers(dp)
+
     except Exception as e:
         logger.error(f"Error while registering admin handlers: {e}")
+
+    else:
+        logger.info("Admin handlers registered successfully")

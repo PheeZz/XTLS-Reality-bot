@@ -10,10 +10,10 @@ class CredentialsGenerator:
     def generate_uuid(self) -> str:
         return os.popen(f"{self._xray_executable_path} uuid").read().strip()
 
-    def generate_new_person(self) -> dict[str, str]:
+    def generate_new_person(self, user_telegram_id: int) -> dict[str, str]:
         uuid = self.generate_uuid()
         return {
             "id": uuid,
-            "email": f"{uuid}@this_server_vpn",
+            "email": f"{uuid}@{user_telegram_id}.com",
             "flow": "xtls-rprx-vision",
         }

@@ -8,11 +8,12 @@ from source.keyboard import inline
 from source.data import config
 from loader import db_manager
 
-
 from source.middlewares import rate_limit
+from .check_is_user_banned import is_user_banned
 
 
 @rate_limit(limit=1)
+@is_user_banned
 async def start(message: types.Message, state: FSMContext):
     logger.info(f"User {message.from_user.id} started bot")
     await state.finish()
@@ -47,9 +48,11 @@ async def start(message: types.Message, state: FSMContext):
 
 
 @rate_limit(limit=1)
+@is_user_banned
 async def main_menu_by_button(call: types.CallbackQuery, state: FSMContext):
     await state.finish()
-    await call.message.edit_text(
+    await call.message.delete()
+    await call.message.answer(
         text=localizer.get_user_localized_text(
             user_language_code=call.from_user.language_code,
             text_localization=localizer.message.greeting,

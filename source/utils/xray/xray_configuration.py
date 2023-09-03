@@ -46,7 +46,9 @@ class XrayConfiguiration:
         Returns:
             str: user config as link string
         """
-        credentials = CredentialsGenerator().generate_new_person()
+        credentials = CredentialsGenerator().generate_new_person(
+            user_telegram_id=user_telegram_id
+        )
         config = await self._load_server_config()
         updated_config = deepcopy(config)
         updated_config["inbounds"][0]["settings"]["clients"].append(credentials)

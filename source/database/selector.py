@@ -1,6 +1,6 @@
 from loguru import logger
 from .connector import DatabaseConnector
-from source.utils.models import User, VpnConfigDB
+from source.utils.models import UserInfo, VpnConfigDB
 from datetime import datetime
 from source.data import config
 
@@ -10,7 +10,7 @@ class Selector(DatabaseConnector):
         super().__init__()
         logger.debug("Selector object was initialized")
 
-    async def get_user_by_id(self, user_id: int) -> User:
+    async def get_user_by_id(self, user_id: int) -> UserInfo:
         (
             username,
             is_banned,
@@ -29,7 +29,7 @@ class Selector(DatabaseConnector):
             - created_configs_count
         )
         is_active_subscription: bool = subscription_end_date >= datetime.now().date()
-        user = User(
+        user = UserInfo(
             user_id=user_id,
             username=username,
             is_not_banned="🟢" if not is_banned else "🔴",
@@ -77,8 +77,11 @@ class Selector(DatabaseConnector):
             WHERE user_id = {user_id};
         """
         result = await self._execute_query(query)
-        logger.debug(f"Bonus configs count for user {user_id} was fetched: {result}")
-        return result[0][0] if result else 0
+        bonus_configs_count = result[0][0] if result else 0
+        logger.debug(
+            f"Bonus configs count for user {user_id} was fetched: {bonus_configs_count}"
+        )
+        return bonus_configs_count
 
     async def is_user_registered(self, user_id: int) -> bool:
         query = f"""--sql
@@ -195,3 +198,33 @@ class Selector(DatabaseConnector):
         result = await self._execute_query(query)
         logger.debug(f"Users ids with {days} days left subscription: {result}")
         return [record[0] for record in result]
+
+    async def get_user_id_by_username(self, username: str) -> int | None:
+        query = f"""--sql
+            SELECT user_id
+            FROM users
+            WHERE username = '{username}';
+        """
+        result = await self._execute_query(query)
+        logger.debug(f"User id by username {username}: {result}")
+        return result[0][0] if result else None
+
+    async def check_is_user_banned(self, user_id: int) -> bool:
+        query = f"""--sql
+            SELECT is_banned
+            FROM users
+            WHERE user_id = {user_id};
+        """
+        result = await self._execute_query(query)
+        logger.debug(f"User {user_id} is banned: {result[0][0]}")
+        return result[0][0]
+
+    async def get_config_name_by_config_uuid(self, config_uuid: str) -> str:
+        query = f"""--sql
+            SELECT config_name
+            FROM vpn_configs
+            WHERE config_uuid = '{config_uuid}';
+        """
+        result = await self._execute_query(query)
+        logger.debug(f"Config name by config uuid {config_uuid}: {result[0][0]}")
+        return result[0][0]

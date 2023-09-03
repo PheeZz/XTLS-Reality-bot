@@ -11,6 +11,16 @@ class Localizer:
     def get_user_localized_text(
         self, user_language_code: str, text_localization: LocalizedText
     ) -> str:
+        """Get text for button or message at user language if it exists
+        in localization.json, else return english localization
+
+        Args:
+            user_language_code (str): user language code (e.g. "ru")
+            text_localization (LocalizedText): object with text localization
+
+        Returns:
+            str: text for button or message at user language if it exists
+        """
         for language in [field.name for field in fields(text_localization)]:
             if language == user_language_code:
                 return getattr(text_localization, language)

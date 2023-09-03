@@ -12,6 +12,7 @@ from source.utils.models import SubscriptionStatus
 
 class SubscriptionChecker:
     def __init__(self):
+        self._messages_limits_counter = 0
         self._scheduler = AsyncIOScheduler()
         # start checking subscriptions every day at 00:00
         self._scheduler.add_job(self._check_subscriptions, "cron", hour=0, minute=0)
@@ -24,6 +25,7 @@ class SubscriptionChecker:
         await self._find_disconnect_and_notify_users_with_expired_subscription()
         await self._find_and_notify_users_with_last_day_left_subscription()
         await self._find_and_notify_users_with_two_days_left_subscription()
+        self._messages_limits_counter = 0
 
     async def _find_disconnect_and_notify_users_with_expired_subscription(self):
         """Find, disconnect and notify users with expired subscription"""
@@ -93,7 +95,6 @@ class SubscriptionChecker:
                 message_text = localizer.message.subscription_two_days_left_notification
             case _:
                 raise ValueError(f"Unknown subscription status: {status}")
-        messages_limits_counter = 0
         for user_id in users_ids:
             try:
                 user = (
@@ -110,8 +111,12 @@ class SubscriptionChecker:
                 logger.error(f"Bot was blocked by user {user_id}")
             except Exception as e:
                 logger.error(e)
+            else:
+                logger.info(
+                    f"User {user_id} was notified about subscription status: {status}"
+                )
             finally:
-                messages_limits_counter += 1
-                if messages_limits_counter == 20:
+                self._messages_limits_counter += 1
+                if self._messages_limits_counter == 20:
                     await asyncio.sleep(1)
-                    messages_limits_counter = 0
+                    self._messages_limits_counter = 0

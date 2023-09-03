@@ -2,7 +2,25 @@ from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 from source.data import config
 from source.utils import localizer
+from source.utils.callback import support_callback
 from loader import db_manager
+
+
+async def insert_button_support(
+    keyboard: InlineKeyboardMarkup | None = None, language_code: str = "ru"
+):
+    if not keyboard:
+        keyboard = InlineKeyboardMarkup(row_width=1)
+    keyboard.add(
+        InlineKeyboardButton(
+            text=localizer.get_user_localized_text(
+                user_language_code=language_code,
+                text_localization=localizer.button.support,
+            ),
+            callback_data="create_support_ticket",
+        )
+    )
+    return keyboard
 
 
 async def start_menu_kb(language_code: str, user_id: int):
@@ -18,14 +36,18 @@ async def start_menu_kb(language_code: str, user_id: int):
         InlineKeyboardButton(
             text=localizer.get_user_localized_text(
                 user_language_code=language_code,
-                text_localization=localizer.button.my_subscription,
+                text_localization=localizer.button.my_profile,
             ),
-            callback_data="my_subscription",
+            callback_data="my_profile",
         ),
     ]
 
     for button in buttons:
         keyboard.insert(button)
+
+    keyboard = await insert_button_support(
+        keyboard=keyboard, language_code=language_code
+    )
 
     if user_id in config.admins_ids:
         keyboard = await add_buttons_for_admin_main_menu(
@@ -125,7 +147,7 @@ async def user_configs_list_keyboard(
     user_id: int, language_code: str
 ) -> InlineKeyboardMarkup:
     users_configs = await db_manager.get_user_config_names_and_uuids(user_id=user_id)
-    keyboard = InlineKeyboardMarkup(row_width=2)
+    keyboard = InlineKeyboardMarkup(row_width=2, resize_keyboard=True)
     is_user_can_generate_new_config = (
         await db_manager.get_count_of_configs_user_can_create(user_id=user_id)
     ) > 0
@@ -152,4 +174,23 @@ async def user_configs_list_keyboard(
     keyboard = await insert_button_back_to_main_menu(
         keyboard=keyboard, language_code=language_code
     )
+    return keyboard
+
+
+async def admin_support_question_notification_keyboard(
+    question: str, from_user: str, language_code: str, answer: str | None = None
+) -> InlineKeyboardMarkup:
+    keyboard = InlineKeyboardMarkup(row_width=1)
+    button = InlineKeyboardButton(
+        text=localizer.get_user_localized_text(
+            user_language_code=language_code,
+            text_localization=localizer.button.answer_to_user_as_support,
+        ),
+        callback_data=support_callback.new(
+            question=question,
+            from_user=from_user,
+            answer=answer if answer else "NULL",
+        ),
+    )
+    keyboard.insert(button)
     return keyboard

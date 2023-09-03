@@ -1,8 +1,8 @@
 {
     "message": {
         "new_user_greeting": {
-            "en": "{is_admin_access}👋🏼 Hello, {user}! I'm a bot for connecting VPN.\n\nCurrent connection country: {server_country}\n\n🔒 I work on the <b>VLESS-XTLS-VISION</b> protocol, which provides <b>fast and secure</b> connection to VPN servers. With me, you can anonymously and securely bypass blocking and protect your data.\n\n💰 To use VPN, you need to pay for a subscription. Please use the /pay command to find out more about available plans and payment methods.\n\n📲 Ready to help you install and configure VPN on your device. Just follow my instructions and everything will be ready!\n\nℹ️ Use the /help command to learn more about the available features.",
-            "ru": "{is_admin_access}👋🏼 Привет, {user}! Я - бот для подключения VPN.\n\nТекущая страна подключения: {server_country}\n\n🔒 Я работаю на протоколе <b>VLESS-XTLS-VISION</b>, который обеспечивает <b>быстрое и безопасное</b> подключение к серверам VPN. Со мной вы можете анонимно и безопасно обходить блокировки и защитить свои данные.\n\n💰 Для использования VPN, необходимо оплатить подписку. Пожалуйста, используйте команду /pay, чтобы узнать подробности о доступных планах и способах оплаты.\n\n📲 Готов помочь установить и настроить VPN на вашем устройстве. Просто следуйте моим инструкциям и все будет готово!\n\nℹ️ Используйте команду /help, чтобы узнать больше о доступных функциях."
+            "en": "{is_admin_access}👋🏼 Hello, {user}! I'm a bot for connecting VPN.\n\nCurrent connection country: {server_country}\n\n🔒 I work on the <b>XTLS-Reality</b> protocol, which provides <b>fast and secure</b> connection to VPN servers. With me, you can anonymously and securely bypass blocking and protect your data.\n\n💰 To use VPN, you need to pay for a subscription. Please use the /pay command to find out more about available plans and payment methods.\n\n📲 Ready to help you install and configure VPN on your device. Just follow my instructions and everything will be ready!\n\nℹ️ Use the /help command to learn how to connect to VPN using the config.",
+            "ru": "{is_admin_access}👋🏼 Привет, {user}! Я - бот для подключения VPN.\n\nТекущая страна подключения: {server_country}\n\n🔒 Я работаю на протоколе <b>XTLS-Reality</b>, который обеспечивает <b>быстрое и безопасное</b> подключение к серверам VPN. Со мной вы можете анонимно и безопасно обходить блокировки и защитить свои данные.\n\n💰 Для использования VPN, необходимо оплатить подписку. Пожалуйста, используйте команду /pay, чтобы узнать подробности о доступных планах и способах оплаты.\n\n📲 Готов помочь установить и настроить VPN на вашем устройстве. Просто следуйте моим инструкциям и все будет готово!\n\nℹ️ Используйте команду /help, чтобы узнать о том как подключиться к VPN с помощью конфига."
         },
         "greeting": {
             "en": "{is_admin_access}👋🏼Hello, {user}!\nUse the buttons in the menu below to access my features\n\nCurrent connection country: {server_country}",
@@ -37,8 +37,8 @@
             "ru": "❌ Оплата отклонена"
         },
         "user_info": {
-            "en": "👤User: {user_id}\n👤Username: {user_username}\n\n🤕Has access to the bot: {is_not_banned}\n\n🗓️Subscription status: {is_active_subscription}\n🗓️When the subscription ends: {subscription_end_date}\n\n📄Active configs: {configs_count}\n📄Total bonus configs: {bonus_configs_count}\n📄Available configs for generation: {unused_configs_count}\n\n📅Registration date: {created_at}",
-            "ru": "👤Пользователь: {user_id}\n👤Username: {user_username}\n\n🤕Есть доступ к боту: {is_not_banned}\n\n🗓️Статус подписки: {is_active_subscription}\n🗓️Когда заканчивается подписка: {subscription_end_date}\n\n📄Активных конфигов: {configs_count}\n📄Всего бонусных конфигов: {bonus_configs_count}\n📄Доступно конфигов для генерации: {unused_configs_count}\n\n📅Дата регистрации: {created_at}"
+            "en": "👤User: {user_id}\n👤Username: {user_username}\n\n🤕Has access to the bot: {is_not_banned}\n\n🗓️Subscription status: {is_active_subscription}\n🗓️When the subscription ends: {subscription_end_date}\n🗓️Days left: {subscription_days_left}\n\n📄Active configs: {configs_count}\n📄Total bonus configs: {bonus_configs_count}\n📄Available configs for generation: {unused_configs_count}\n\n📅Registration date: {created_at}",
+            "ru": "👤Пользователь: {user_id}\n👤Username: {user_username}\n\n🤕Есть доступ к боту: {is_not_banned}\n\n🗓️Статус подписки: {is_active_subscription}\n🗓️Когда заканчивается подписка: {subscription_end_date}\n🗓️Осталось дней: {subscription_days_left}\n\n📄Активных конфигов: {configs_count}\n📄Всего бонусных конфигов: {bonus_configs_count}\n📄Доступно конфигов для генерации: {unused_configs_count}\n\n📅Дата регистрации: {created_at}"
         },
         "user_configs_list": {
             "en": "📄Displaying your configs on the buttons below.\n\nBy default, each user has access to 2 configs. If you need more, you can contact the administration.",
@@ -57,8 +57,8 @@
             "ru": "📄Понял! Теперь я сгенерирую для тебя новый конфиг. Это может занять несколько секунд, пожалуйста, подожди..."
         },
         "config_generated": {
-            "en": "✅ Config generated and ready to use!\nName: <b>{config_name}</b>\n\n📝 Connection data:\n<code>{config_data}</code>\n\n🔙 To return to the menu, use the /start command",
-            "ru": "✅ Конфиг сгенерирован и готов к использованию!\nНазвание: <b>{config_name}</b>\n\n📝 Данные для подключения:\n<code>{config_data}</code>\n\n🔙 Для возврата в меню используй команду /start"
+            "en": "✅ Config ready to use!\nName: <b>{config_name}</b>\n\n📝 Connection data:\n<code>{config_data}</code>\n\n🔙 To return to the menu, use the /start command",
+            "ru": "✅ Конфиг готов к использованию!\nНазвание: <b>{config_name}</b>\n\n📝 Данные для подключения:\n<code>{config_data}</code>\n\n🔙 Для возврата в меню используй команду /start"
         },
         "subscription_expired_notification": {
             "en": "{user}, I have bad news...😢\nYour VPN subscription <b>has expired</b>. To renew your subscription, please use the /pay command",
@@ -71,6 +71,42 @@
         "subscription_two_days_left_notification": {
             "en": "{user}, I have bad news...😢\nYour VPN subscription will expire <b>in 2 days</b>. To renew your subscription, please use the /pay command",
             "ru": "{user}, у меня плохие новости...😢\nТвоя подписка на VPN истекает <b>через 2 дня</b>. Для продления подписки, пожалуйста, воспользуйся командой /pay"
+        },
+        "request_user_id_or_username": {
+            "en": "👤Enter the user ID or username to display information about the user",
+            "ru": "👤Введите ID или username пользователя, чтобы отобразить информацию о пользователе"
+        },
+        "error_user_not_found": {
+            "en": "❌User not found, please try again",
+            "ru": "❌Пользователь не найден, пожалуйста, попробуйте еще раз"
+        },
+        "ask_support_question": {
+            "en": "📝Enter your question for the support service. The administration will respond to you as soon as possible.",
+            "ru": "📝Введите свой вопрос для службы поддержки. Администрация ответит вам в ближайшее время."
+        },
+        "support_question_sent_by_user": {
+            "en": "✅ Your question has been sent to the support service. The administration will respond to you as soon as possible.",
+            "ru": "✅ Ваш вопрос отправлен в службу поддержки. Администрация ответит вам в ближайшее время."
+        },
+        "admin_notification_about_new_support_question": {
+            "en": "User <code>{username}</code> (id:<code>{user_id}</code>) asked a question to the support service",
+            "ru": "Пользователь <code>{username}</code> (id:<code>{user_id}</code>) задал вопрос в службу поддержки"
+        },
+        "ask_admin_for_support_answer": {
+            "en": "📝Enter your answer to the user",
+            "ru": "📝Введите свой ответ пользователю"
+        },
+        "support_answer_from_admin": {
+            "en": "📝Support service answer to the question: {support_question}\n\n❗️{support_answer}",
+            "ru": "📝Ответ службы поддержки по вопросу: {support_question}\n\n❗️{support_answer}"
+        },
+        "support_answer_sent_to_user": {
+            "en": "✅ Your answer has been sent to the user",
+            "ru": "✅ Ваш ответ отправлен пользователю"
+        },
+        "you_are_banned": {
+            "en": "🤕You are banned from using the bot. If you think this is a mistake, please contact the administration.",
+            "ru": "🤕Вам запрещено пользоваться ботом. Если вы считаете, что это ошибка, пожалуйста, свяжитесь с администрацией."
         }
     },
     "button": {
@@ -86,9 +122,9 @@
             "en": "📄My configs",
             "ru": "📄Мои конфиги"
         },
-        "my_subscription": {
-            "en": "⌛️My subscription",
-            "ru": "⌛️Моя подписка"
+        "my_profile": {
+            "en": "👤My profile",
+            "ru": "👤Мой профиль"
         },
         "show_user": {
             "en": "👤Show user",
@@ -129,6 +165,14 @@
         "back_to_main_menu": {
             "en": "🔙Back to menu",
             "ru": "🔙Вернуться в меню"
+        },
+        "support": {
+            "en": "📝Support",
+            "ru": "📝Поддержка"
+        },
+        "answer_to_user_as_support": {
+            "en": "📝Answer to user",
+            "ru": "📝Ответить пользователю"
         }
     }
 }

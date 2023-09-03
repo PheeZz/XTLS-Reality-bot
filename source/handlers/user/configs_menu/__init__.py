@@ -4,6 +4,7 @@ from loguru import logger
 
 from .show_configs import *
 from .create_new_config import *
+from .show_specified_config import *
 
 
 def register_configs_menu_handlers(dp: Dispatcher):
@@ -24,6 +25,12 @@ def register_configs_menu_handlers(dp: Dispatcher):
             generate_config_for_user,
             content_types=ContentType.TEXT,
             state=GeneratingNewConfig.waiting_for_config_name,
+        )
+
+        dp.register_callback_query_handler(
+            show_specified_config,
+            lambda call: call.data.startswith("show_config_"),
+            state="*",
         )
     except Exception as e:
         logger.error(f"Error while registering configs_menu handlers: {e}")

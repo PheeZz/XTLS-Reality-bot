@@ -6,6 +6,8 @@ from source.utils.states.user import PaymentViaBankTransfer
 from .start import *
 from .pay import *
 from .configs_menu.show_configs import *
+from .my_profile import show_my_profile
+from .ask_support import *
 
 from .configs_menu import register_configs_menu_handlers
 
@@ -27,6 +29,23 @@ def register_user_handlers(dp: Dispatcher):
                 ContentType.DOCUMENT,
             ],
             state=PaymentViaBankTransfer.waiting_for_payment_screenshot_or_receipt,
+        )
+
+        dp.register_callback_query_handler(
+            show_my_profile,
+            lambda call: call.data == "my_profile",
+            state="*",
+        )
+
+        dp.register_callback_query_handler(
+            ask_user_for_question_to_support,
+            lambda call: call.data == "create_support_ticket",
+            state="*",
+        )
+
+        dp.register_message_handler(
+            forward_question_to_admins,
+            state=AskSupport.waiting_for_question,
         )
 
         register_configs_menu_handlers(dp)

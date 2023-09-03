@@ -4,7 +4,7 @@ from enum import Enum
 
 
 @dataclass
-class User:
+class UserInfo:
     user_id: int
     username: str
     is_not_banned: str

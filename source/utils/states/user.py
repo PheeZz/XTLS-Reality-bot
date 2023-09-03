@@ -7,3 +7,7 @@ class PaymentViaBankTransfer(StatesGroup):
 
 class GeneratingNewConfig(StatesGroup):
     waiting_for_config_name = State()
+
+
+class AskSupport(StatesGroup):
+    waiting_for_question = State()

@@ -81,3 +81,39 @@ class LocalizedMessageText(BaseLocalizedObject):
     @property
     def subscription_two_days_left_notification(self) -> LocalizedText:
         return self._get_entity_text("subscription_two_days_left_notification")
+
+    @property
+    def request_user_id_or_username(self) -> LocalizedText:
+        return self._get_entity_text("request_user_id_or_username")
+
+    @property
+    def error_user_not_found(self) -> LocalizedText:
+        return self._get_entity_text("error_user_not_found")
+
+    @property
+    def ask_support_question(self) -> LocalizedText:
+        return self._get_entity_text("ask_support_question")
+
+    @property
+    def support_question_sent_by_user(self) -> LocalizedText:
+        return self._get_entity_text("support_question_sent_by_user")
+
+    @property
+    def admin_notification_about_new_support_question(self) -> LocalizedText:
+        return self._get_entity_text("admin_notification_about_new_support_question")
+
+    @property
+    def ask_admin_for_support_answer(self) -> LocalizedText:
+        return self._get_entity_text("ask_admin_for_support_answer")
+
+    @property
+    def support_answer_from_admin(self) -> LocalizedText:
+        return self._get_entity_text("support_answer_from_admin")
+
+    @property
+    def support_answer_sent_to_user(self) -> LocalizedText:
+        return self._get_entity_text("support_answer_sent_to_user")
+
+    @property
+    def you_are_banned(self) -> LocalizedText:
+        return self._get_entity_text("you_are_banned")

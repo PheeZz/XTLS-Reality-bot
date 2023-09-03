@@ -23,8 +23,8 @@ class LocalizedButtonText(BaseLocalizedObject):
         return self._get_entity_text("my_configs")
 
     @property
-    def my_subscription(self) -> LocalizedText:
-        return self._get_entity_text("my_subscription")
+    def my_profile(self) -> LocalizedText:
+        return self._get_entity_text("my_profile")
 
     @property
     def show_user(self) -> LocalizedText:
@@ -65,3 +65,11 @@ class LocalizedButtonText(BaseLocalizedObject):
     @property
     def back_to_main_menu(self) -> LocalizedText:
         return self._get_entity_text("back_to_main_menu")
+
+    @property
+    def support(self) -> LocalizedText:
+        return self._get_entity_text("support")
+
+    @property
+    def answer_to_user_as_support(self) -> LocalizedText:
+        return self._get_entity_text("answer_to_user_as_support")

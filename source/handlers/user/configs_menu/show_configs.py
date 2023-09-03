@@ -6,9 +6,10 @@ from source.keyboard import inline
 from loader import db_manager
 
 from source.middlewares import rate_limit
-
+from ..check_is_user_banned import is_user_banned
 
 @rate_limit(limit=1)
+@is_user_banned
 async def show_user_configs(call: types.CallbackQuery, state: FSMContext):
     user_id = call.from_user.id
 

@@ -28,3 +28,18 @@ class Updater(DatabaseConnector):
             return False
         logger.debug(f"Added {days} days to user {user_id} subscription")
         return True
+
+    async def toggle_user_banned_status(self, user_id: int) -> bool:
+        """
+        Toggle user banned status
+        """
+        query = f"""--sql
+            UPDATE users
+            SET is_banned = NOT is_banned
+            WHERE user_id = {user_id};
+        """
+        if await self._execute_query(query) is False:
+            logger.error(f"Error while toggling user {user_id} banned status")
+            return False
+        logger.debug(f"Toggled user {user_id} banned status")
+        return True
