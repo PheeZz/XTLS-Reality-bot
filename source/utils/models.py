@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from datetime import datetime
+from enum import Enum
 
 
 @dataclass
@@ -21,3 +22,9 @@ class VpnConfigDB:
     user_id: int
     config_name: str
     config_uuid: str
+
+
+class SubscriptionStatus(Enum):
+    expired = "EXPIRED"
+    last_day_left = "LAST_DAY_LEFT"
+    two_days_left = "TWO_DAYS_LEFT"

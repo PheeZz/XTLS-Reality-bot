@@ -1,5 +1,6 @@
 from dotenv import load_dotenv
-from loguru import logger
+from source.utils import IPInfo
+from flag import flag
 from os import getenv
 import os
 
@@ -31,6 +32,7 @@ class Configuration:
             self._get_user_default_max_configs_count()
         )
         self._server_ip: str = self._get_server_ip()
+        self._server_country: str = self._get_server_country()
 
     def _get_bot_token(self) -> str:
         bot_token = getenv("TG_BOT_TOKEN")
@@ -112,12 +114,13 @@ class Configuration:
         return xray_config_path
 
     def _get_server_ip(self) -> str:
-        server_ip = os.popen("curl ifconfig.me").read().strip()
-        if not server_ip:
-            raise RuntimeError(
-                "Server ip not found. Check your internet connection and curl package installation"
-            )
-        return server_ip
+        return IPInfo().get_server_ip()
+
+    def _get_server_country(self) -> str:
+        ip_info = IPInfo()
+        server_country = ip_info.get_server_country_name()
+        server_country_code = ip_info.get_server_country_code()
+        return f"{flag(server_country_code)} {server_country}"
 
     @property
     def bot_token(self) -> str:
@@ -166,3 +169,7 @@ class Configuration:
     @property
     def server_ip(self) -> str:
         return self._server_ip
+
+    @property
+    def server_country(self) -> str:
+        return self._server_country

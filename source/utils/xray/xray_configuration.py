@@ -63,9 +63,13 @@ class XrayConfiguiration:
                 config_name=config_name,
                 config_uuid=credentials["id"],
             )
-            return await self.create_user_config_as_link_string(credentials["id"])
+            return await self.create_user_config_as_link_string(
+                credentials["id"], config_name=config_name
+            )
 
-    async def create_user_config_as_link_string(self, uuid: str):
+    async def create_user_config_as_link_string(
+        self, uuid: str, config_name: str
+    ) -> str:
         link = (
             f"vless://{uuid}@{self._server_ip_and_port}"
             f"?security=reality"
@@ -76,6 +80,69 @@ class XrayConfiguiration:
             "&flow=xtls-rprx-vision"
             "&encryption=none"
             "#"
-            f"{self._config_prefix}_{uuid}"
+            f"{self._config_prefix}_{config_name}"
         )
         return link
+
+    async def get_all_uuids(self) -> list[str]:
+        config = await self._load_server_config()
+        uuids = [
+            client["id"] for client in config["inbounds"][0]["settings"]["clients"]
+        ]
+        return uuids
+
+    async def disconnect_user_by_uuid(self, uuid: str) -> bool:
+        """Disconnect user by uuid
+
+        Args:
+            uuid (str): user uuid in xray config
+
+        Returns:
+            bool: True if user was disconnected, False if not
+        """
+        config = await self._load_server_config()
+        updated_config = deepcopy(config)
+        updated_config["inbounds"][0]["settings"]["clients"] = [
+            client
+            for client in updated_config["inbounds"][0]["settings"]["clients"]
+            if client["id"] != uuid
+        ]
+        try:
+            await self._save_server_config(updated_config)
+            await self._restart_xray()
+        except Exception as e:
+            logger.error(e)
+            await self._save_server_config(config)
+            await self._restart_xray()
+            return False
+        else:
+            await db_manager.delete_one_vpn_config_by_uuid(uuid=uuid)
+            return True
+
+    async def disconnect_many_users_by_uuids(self, uuids: list[str]) -> bool:
+        """Disconnect many users by uuids
+
+        Args:
+            uuids (list[str]): list of users uuids in xray config
+
+        Returns:
+            bool: True if users was disconnected, False if not
+        """
+        config = await self._load_server_config()
+        updated_config = deepcopy(config)
+        updated_config["inbounds"][0]["settings"]["clients"] = [
+            client
+            for client in updated_config["inbounds"][0]["settings"]["clients"]
+            if client["id"] not in uuids
+        ]
+        try:
+            await self._save_server_config(updated_config)
+            await self._restart_xray()
+        except Exception as e:
+            logger.error(e)
+            await self._save_server_config(config)
+            await self._restart_xray()
+            return False
+        else:
+            await db_manager.delete_many_vpn_configs_by_uuids(uuids=uuids)
+            return True

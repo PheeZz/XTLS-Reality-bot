@@ -36,6 +36,7 @@ async def start(message: types.Message, state: FSMContext):
             is_admin_access=hbold("[ADMIN ACCESS]\n\n")
             if message.from_user.id in config.admins_ids
             else "",
+            server_country=config.server_country,
         ),
         reply_markup=await inline.start_menu_kb(
             language_code=message.from_user.language_code,
@@ -53,7 +54,13 @@ async def main_menu_by_button(call: types.CallbackQuery, state: FSMContext):
             user_language_code=call.from_user.language_code,
             text_localization=localizer.message.greeting,
         ).format(
-            user=call.from_user.full_name, is_admin_access=hbold("[ADMIN ACCESS]\n\n")
+            user=call.from_user.full_name,
+            is_admin_access=hbold(
+                "[ADMIN ACCESS]\n\n",
+            )
+            if call.from_user.id in config.admins_ids
+            else "",
+            server_country=config.server_country,
         ),
         reply_markup=await inline.start_menu_kb(
             language_code=call.from_user.language_code,

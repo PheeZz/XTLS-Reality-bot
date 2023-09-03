@@ -126,7 +126,7 @@ class Selector(DatabaseConnector):
             for record in result
         ]
 
-    async def how_much_more_configs_user_can_create(self, user_id: int) -> int:
+    async def get_count_of_configs_user_can_create(self, user_id: int) -> int:
         bonus_configs_count = await self._get_bonus_configs_count_by_user_id(user_id)
         created_configs_count = await self._get_created_configs_count_by_user_id(
             user_id
@@ -138,3 +138,60 @@ class Selector(DatabaseConnector):
         )
         logger.debug(f"User {user_id} can create {unused_configs_count} more configs")
         return unused_configs_count
+
+    async def check_for_user_has_active_subscription_by_config_uuid(
+        self, config_uuid: str
+    ) -> bool:
+        query = f"""--sql
+            SELECT EXISTS(
+                SELECT 1
+                FROM users
+                WHERE subscription_end_date >= NOW()::date
+                AND user_id = (
+                    SELECT user_id
+                    FROM vpn_configs
+                    WHERE config_uuid = '{config_uuid}'
+                )
+            );
+        """
+        result = await self._execute_query(query)
+        logger.debug(
+            f"User with uuid {config_uuid} have active subscription: {result[0][0]}"
+        )
+        return result[0][0]
+
+    async def get_users_ids_by_configs_uuids(
+        self, configs_uuid: list[str]
+    ) -> list[int]:
+        """
+        Get users ids by configs uuids
+
+            Args:
+                configs_uuid (list[str]): list of configs uuids
+            Returns:
+                list[int]: list of unique users ids
+        """
+        query = f"""--sql
+            SELECT DISTINCT user_id
+            FROM vpn_configs
+            WHERE config_uuid = ANY(ARRAY{configs_uuid});
+        """
+        result = await self._execute_query(query)
+        logger.debug(f"Users ids by configs uuids {configs_uuid}: {result}")
+        return [record[0] for record in result]
+
+    async def get_users_ids_with_last_day_left_subscription(self) -> list[int]:
+        return await self._get_users_ids_by_subscription_ends_in_days(days=1)
+
+    async def get_users_ids_with_two_days_left_subscription(self) -> list[int]:
+        return await self._get_users_ids_by_subscription_ends_in_days(days=2)
+
+    async def _get_users_ids_by_subscription_ends_in_days(self, days: int) -> list[int]:
+        query = f"""--sql
+            SELECT user_id
+            FROM users
+            WHERE subscription_end_date = NOW()::date + INTERVAL '{days} days';
+        """
+        result = await self._execute_query(query)
+        logger.debug(f"Users ids with {days} days left subscription: {result}")
+        return [record[0] for record in result]

@@ -69,3 +69,15 @@ class LocalizedMessageText(BaseLocalizedObject):
     @property
     def config_generated(self) -> LocalizedText:
         return self._get_entity_text("config_generated")
+
+    @property
+    def subscription_expired_notification(self) -> LocalizedText:
+        return self._get_entity_text("subscription_expired_notification")
+
+    @property
+    def subscription_last_day_left_notification(self) -> LocalizedText:
+        return self._get_entity_text("subscription_last_day_left_notification")
+
+    @property
+    def subscription_two_days_left_notification(self) -> LocalizedText:
+        return self._get_entity_text("subscription_two_days_left_notification")

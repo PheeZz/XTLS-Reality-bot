@@ -1,12 +1,12 @@
 {
     "message": {
         "new_user_greeting": {
-            "en": "{is_admin_access}👋🏼 Hello, {user}! I'm a bot for connecting VPN.\n\n🔒 I work on the <b>VLESS-XTLS-VISION</b> protocol, which provides <b>fast and secure</b> connection to VPN servers. With me, you can anonymously and securely bypass blocking and protect your data.\n\n💰 To use VPN, you need to pay for a subscription. Please use the /pay command to find out more about available plans and payment methods.\n\n📲 Ready to help you install and configure VPN on your device. Just follow my instructions and everything will be ready!\n\nℹ️ Use the /help command to learn more about the available features.",
-            "ru": "{is_admin_access}👋🏼 Привет, {user}! Я - бот для подключения VPN.\n\n🔒 Я работаю на протоколе <b>VLESS-XTLS-VISION</b>, который обеспечивает <b>быстрое и безопасное</b> подключение к серверам VPN. Со мной вы можете анонимно и безопасно обходить блокировки и защитить свои данные.\n\n💰 Для использования VPN, необходимо оплатить подписку. Пожалуйста, используйте команду /pay, чтобы узнать подробности о доступных планах и способах оплаты.\n\n📲 Готов помочь установить и настроить VPN на вашем устройстве. Просто следуйте моим инструкциям и все будет готово!\n\nℹ️ Используйте команду /help, чтобы узнать больше о доступных функциях."
+            "en": "{is_admin_access}👋🏼 Hello, {user}! I'm a bot for connecting VPN.\n\nCurrent connection country: {server_country}\n\n🔒 I work on the <b>VLESS-XTLS-VISION</b> protocol, which provides <b>fast and secure</b> connection to VPN servers. With me, you can anonymously and securely bypass blocking and protect your data.\n\n💰 To use VPN, you need to pay for a subscription. Please use the /pay command to find out more about available plans and payment methods.\n\n📲 Ready to help you install and configure VPN on your device. Just follow my instructions and everything will be ready!\n\nℹ️ Use the /help command to learn more about the available features.",
+            "ru": "{is_admin_access}👋🏼 Привет, {user}! Я - бот для подключения VPN.\n\nТекущая страна подключения: {server_country}\n\n🔒 Я работаю на протоколе <b>VLESS-XTLS-VISION</b>, который обеспечивает <b>быстрое и безопасное</b> подключение к серверам VPN. Со мной вы можете анонимно и безопасно обходить блокировки и защитить свои данные.\n\n💰 Для использования VPN, необходимо оплатить подписку. Пожалуйста, используйте команду /pay, чтобы узнать подробности о доступных планах и способах оплаты.\n\n📲 Готов помочь установить и настроить VPN на вашем устройстве. Просто следуйте моим инструкциям и все будет готово!\n\nℹ️ Используйте команду /help, чтобы узнать больше о доступных функциях."
         },
         "greeting": {
-            "en": "{is_admin_access}👋🏼Hello, {user}!\nUse the buttons in the menu below to access my features",
-            "ru": "{is_admin_access}👋🏼Привет, {user}!\nИспользуй кнопки в меню ниже для доступа к моим функциям"
+            "en": "{is_admin_access}👋🏼Hello, {user}!\nUse the buttons in the menu below to access my features\n\nCurrent connection country: {server_country}",
+            "ru": "{is_admin_access}👋🏼Привет, {user}!\nИспользуй кнопки в меню ниже для доступа к моим функциям\n\nТекущая страна подключения: {server_country}"
         },
         "payment_method_card": {
             "en": "At the moment, only <b>bank transfer</b> is available as a payment method. To get access to the service for <b>30 days</b>, transfer <b>{amount}</b> to the card 💳 <code>{payment_card}</code>, after which send a screenshot/receipt of the operation to this chat. The administration will check the payment and activate the subscription.\n\n<b>IMPORTANT:</b> I will be able to notify the administration only if you send me a document after this message, if you go to the menu, you need to re-initialize the payment process!",
@@ -59,6 +59,18 @@
         "config_generated": {
             "en": "✅ Config generated and ready to use!\nName: <b>{config_name}</b>\n\n📝 Connection data:\n<code>{config_data}</code>\n\n🔙 To return to the menu, use the /start command",
             "ru": "✅ Конфиг сгенерирован и готов к использованию!\nНазвание: <b>{config_name}</b>\n\n📝 Данные для подключения:\n<code>{config_data}</code>\n\n🔙 Для возврата в меню используй команду /start"
+        },
+        "subscription_expired_notification": {
+            "en": "{user}, I have bad news...😢\nYour VPN subscription <b>has expired</b>. To renew your subscription, please use the /pay command",
+            "ru": "{user}, у меня плохие новости...😢\nТвоя подписка на VPN <b>истекла</b>. Для продления подписки, пожалуйста, воспользуйся командой /pay"
+        },
+        "subscription_last_day_left_notification": {
+            "en": "{user}, I have bad news...😢\nYour VPN subscription will expire <b>tomorrow</b>. To renew your subscription, please use the /pay command",
+            "ru": "{user}, у меня плохие новости...😢\nТвоя подписка на VPN истекает <b>завтра</b>. Для продления подписки, пожалуйста, воспользуйся командой /pay"
+        },
+        "subscription_two_days_left_notification": {
+            "en": "{user}, I have bad news...😢\nYour VPN subscription will expire <b>in 2 days</b>. To renew your subscription, please use the /pay command",
+            "ru": "{user}, у меня плохие новости...😢\nТвоя подписка на VPN истекает <b>через 2 дня</b>. Для продления подписки, пожалуйста, воспользуйся командой /pay"
         }
     },
     "button": {

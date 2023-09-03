@@ -127,7 +127,7 @@ async def user_configs_list_keyboard(
     users_configs = await db_manager.get_user_config_names_and_uuids(user_id=user_id)
     keyboard = InlineKeyboardMarkup(row_width=2)
     is_user_can_generate_new_config = (
-        await db_manager.how_much_more_configs_user_can_create(user_id=user_id)
+        await db_manager.get_count_of_configs_user_can_create(user_id=user_id)
     ) > 0
     if is_user_can_generate_new_config:
         create_new_config_button = InlineKeyboardButton(

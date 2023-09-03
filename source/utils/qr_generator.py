@@ -31,7 +31,7 @@ def create_qr_code_from_config_as_link_str(config: str) -> BytesIO:
         color_mask=SquareGradiantColorMask(
             center_color=(220, 0, 220), edge_color=(0, 0, 64)
         ),
-        embeded_image_path="source/data/logo.png",
+        embeded_image_path="source/data/logo_circle.png",
     )
 
     img_io = BytesIO()

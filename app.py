@@ -14,6 +14,7 @@ async def set_commands(dp):
 async def on_startup(dp):
     from source import handlers
     from source import middlewares
+    from source.utils.shedulers import SubscriptionChecker
     from loguru import logger
     import time
 
