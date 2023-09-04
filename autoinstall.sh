@@ -337,7 +337,7 @@ read watch_env_file
 
 if [ "$watch_env_file" = "y" ]
 then
-      batsudo cat ~/XTLS-Reality-bot/source/data/.env
+      sudo batcat ~/XTLS-Reality-bot/source/data/.env
 fi
 
 echo "$Blue Your bot logs losudo cated at $Orange ~/XTLS-Reality-bot/logs/" | sed 's/\$//g'
