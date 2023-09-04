@@ -307,6 +307,7 @@ $(poetry env info --path)/bin/python3.11 create_database_tables.py || -u postgre
 cd
 
 #create systemd service for bot
+cd ~/XTLS-Reality-bot
 sudo cat <<EOF > /etc/systemd/system/xtls-reality-bot.service
 [Unit]
 Description=XTLS-Reality telegram bot
@@ -321,6 +322,7 @@ Restart=on-failure
 [Install]
 WantedBy=multi-user.target
 EOF
+cd
 
 #enable and start bot service
 systemctl daemon-reload
