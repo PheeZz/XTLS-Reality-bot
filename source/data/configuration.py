@@ -17,7 +17,6 @@ class Configuration:
     def __init__(self):
         load_dotenv()
         self._bot_token: str = self._get_bot_token()
-        self._server_cfg_path: str = self._get_server_cfg_path()
         self._admins_ids: list[int] = self._get_admins_ids()
         self._payment_card: str = self._get_payment_card()
         self._user_config_prefix: str = self._get_user_config_prefix()
@@ -39,12 +38,6 @@ class Configuration:
         if not bot_token:
             raise DotEnvVariableNotFound("TG_BOT_TOKEN")
         return bot_token
-
-    def _get_server_cfg_path(self) -> str:
-        server_cfg_path = getenv("SERVER_CFG_PATH")
-        if not server_cfg_path:
-            raise DotEnvVariableNotFound("SERVER_CFG_PATH")
-        return server_cfg_path
 
     def _get_admins_ids(self) -> list[int]:
         admins_ids = getenv("ADMINS_IDS")
@@ -125,10 +118,6 @@ class Configuration:
     @property
     def bot_token(self) -> str:
         return self._bot_token
-
-    @property
-    def server_cfg_path(self) -> str:
-        return self._server_cfg_path
 
     @property
     def admins_ids(self) -> list[int]:

@@ -315,7 +315,7 @@ After=network.target
 [Service]
 Type=simple
 User=$current_os_user
-ExecStart=bin/bash -c 'cd ~/XTLS-Reality-bot && $(poetry env info --path)/bin/python3.11 app.py'
+ExecStart=bin/bash -c 'cd ~/XTLS-Reality-bot/ && $(poetry env info --path)/bin/python3.11 app.py'
 Restart=on-failure
 
 [Install]
