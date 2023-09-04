@@ -5,7 +5,9 @@ Defaul_color=$'\e[0m'
 Orange=$'\e[1;33m'
 White=$'\e[1;37m'
 
-sudo apt install -y curl
+su
+
+apt install -y curl
 #clear screen after install curl
 clear
 
@@ -75,7 +77,7 @@ echo "Just press ENTER for use default name [$Blue xlts-reality-bot $White]" | s
 read database_name
 if [ -z "$database_name" ]
 then
-      database_name="xlts-reality-bot"
+      database_name="xlts_reality_bot"
 fi
 
 #ask user for Database user
@@ -155,26 +157,26 @@ read update_system
 
 if [ "$update_system" = "y" ]
 then
-      sudo apt update && sudo apt upgrade -y
+      apt update && apt upgrade -y
 fi
 
 #install packages
-sudo apt install -y git bat tmux mosh postgresql postgresql-contrib
-sudo systemctl start postgresql.service
+apt install -y git bat tmux mosh postgresql postgresql-contrib
+systemctl start postgresql.service
 
 #install python3.11 and pip
-sudo apt install -y software-properties-common
-sudo add-apt-repository ppa:deadsnakes/ppa
-sudo apt update
-sudo apt install -y python3.11 python3.11-dev python3.11-distutils python3.11-venv
+apt install -y software-properties-common
+add-apt-repository ppa:deadsnakes/ppa
+apt update
+apt install -y python3.11 python3.11-dev python3.11-distutils python3.11-venv
 curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
-sudo python3.11 get-pip.py
+python3.11 get-pip.py
 
 #install poetry
 pip3.11 install poetry
 
 
-echo "$White" | sed 's/\$//g'
+echo "$Orange" | sed 's/\$//g'
 echo "Installing XRAY (XTLS-Reality)"
 echo "............................................................"
 echo "$Defaul_color" | sed 's/\$//g'
@@ -193,7 +195,7 @@ sysctl -p
 #and get public and private keys by splitting lines output and
 #remove "Private key: " and "Public key: " from output
 #and save it to variables
-x25519_keys=$(sudo /usr/local/bin/xray x25519)
+x25519_keys=$(/usr/local/bin/xray x25519)
 x25519_private_key=$(echo "$x25519_keys" | sed -n 1p | sed 's/Private key: //g')
 x25519_public_key=$(echo "$x25519_keys" | sed -n 2p | sed 's/Public key: //g')
 
@@ -202,7 +204,7 @@ x25519_public_key=$(echo "$x25519_keys" | sed -n 2p | sed 's/Public key: //g')
 short_id=$(openssl rand -hex 8)
 
 #configure xray
-sudo cat <<EOF > /usr/local/etc/xray/config.json
+cat <<EOF > /usr/local/etc/xray/config.json
 {
     "log": {
         "loglevel": "info"
@@ -262,7 +264,7 @@ sudo cat <<EOF > /usr/local/etc/xray/config.json
 EOF
 
 #restart xray
-sudo systemctl restart xray.service
+systemctl restart xray.service
 
 #configure postgresql
 su postgres -c "psql -c \"CREATE USER $database_user WITH PASSWORD '$database_passwd';\""
@@ -279,7 +281,7 @@ cd XTLS-Reality-bot
 poetry install
 
 #configure bot .env file
-cd data
+cd ~/XTLS-Reality-bot/data
 cat <<EOF > .env
 TG_BOT_TOKEN = "$bot_token"
 PAYMENT_CARD = "$payment_card"
@@ -301,11 +303,11 @@ EOF
 
 #try to run create_database_tables.py if it fails, then give db user superuser privileges
 cd ~/XTLS-Reality-bot
-$(poetry env info --path)/bin/python3.11 create_database_tables.py || sudo -u postgres psql -c "ALTER USER $database_user WITH SUPERUSER;" && $(poetry env info --path)/bin/python3.11 create_database_tables.py
+$(poetry env info --path)/bin/python3.11 create_database_tables.py || -u postgres psql -c "ALTER USER $database_user WITH SUPERUSER;" && $(poetry env info --path)/bin/python3.11 create_database_tables.py
 
 #create systemd service for bot
 cd ~
-sudo cat <<EOF > /etc/systemd/system/xtls-reality-bot.service
+cat <<EOF > /etc/systemd/system/xtls-reality-bot.service
 [Unit]
 Description=XTLS-Reality telegram bot
 After=network.target
