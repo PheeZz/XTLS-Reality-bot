@@ -5,9 +5,9 @@ Defaul_color=$'\e[0m'
 Orange=$'\e[1;33m'
 White=$'\e[1;37m'
 
-su
 
-apt install -y curl
+
+sudo apt install -y curl
 #clear screen after install curl
 clear
 
@@ -157,18 +157,18 @@ read update_system
 
 if [ "$update_system" = "y" ]
 then
-      apt update && apt upgrade -y
+      sudo apt update && sudo apt upgrade -y
 fi
 
 #install packages
-apt install -y git bat tmux mosh postgresql postgresql-contrib
+sudo apt install -y git bat tmux mosh postgresql postgresql-contrib
 systemctl start postgresql.service
 
 #install python3.11 and pip
-apt install -y software-properties-common
-add-apt-repository ppa:deadsnakes/ppa
-apt update
-apt install -y python3.11 python3.11-dev python3.11-distutils python3.11-venv
+sudo apt install -y software-properties-common
+add-sudo apt-repository ppa:deadsnakes/ppa
+sudo apt update
+sudo apt install -y python3.11 python3.11-dev python3.11-distutils python3.11-venv
 curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
 python3.11 get-pip.py
 
@@ -195,16 +195,16 @@ sysctl -p
 #and get public and private keys by splitting lines output and
 #remove "Private key: " and "Public key: " from output
 #and save it to variables
-x25519_keys=$(/usr/local/bin/xray x25519)
+x25519_keys=$(sudo /usr/local/bin/xray x25519)
 x25519_private_key=$(echo "$x25519_keys" | sed -n 1p | sed 's/Private key: //g')
 x25519_public_key=$(echo "$x25519_keys" | sed -n 2p | sed 's/Public key: //g')
 
 
 #get short id by using openssl
-short_id=$(openssl rand -hex 8)
+short_id=$(sudo openssl rand -hex 8)
 
 #configure xray
-cat <<EOF > /usr/local/etc/xray/config.json
+sudo cat <<EOF > /usr/local/etc/xray/config.json
 {
     "log": {
         "loglevel": "info"
@@ -282,7 +282,7 @@ poetry install
 
 #configure bot .env file
 cd ~/XTLS-Reality-bot/data
-cat <<EOF > .env
+sudo cat <<EOF > .env
 TG_BOT_TOKEN = "$bot_token"
 PAYMENT_CARD = "$payment_card"
 ADMINS_IDS = "$admins_ids"
@@ -307,7 +307,7 @@ $(poetry env info --path)/bin/python3.11 create_database_tables.py || -u postgre
 
 #create systemd service for bot
 cd ~
-cat <<EOF > /etc/systemd/system/xtls-reality-bot.service
+sudo cat <<EOF > /etc/systemd/system/xtls-reality-bot.service
 [Unit]
 Description=XTLS-Reality telegram bot
 After=network.target
@@ -331,16 +331,16 @@ systemctl start xtls-reality-bot.service
 echo "$Green Installation completed successfully" | sed 's/\$//g'
 echo "$Defaul_color" | sed 's/\$//g'
 
-echo "$Blue Your .env file located at $Orange ~/XTLS-Reality-bot/data/.env" | sed 's/\$//g'
+echo "$Blue Your .env file losudo cated at $Orange ~/XTLS-Reality-bot/data/.env" | sed 's/\$//g'
 echo "$Blue Do u want to watch it? [ y / $Blue N $White]" | sed 's/\$//g'
 read watch_env_file
 
 if [ "$watch_env_file" = "y" ]
 then
-      batcat ~/XTLS-Reality-bot/data/.env
+      batsudo cat ~/XTLS-Reality-bot/data/.env
 fi
 
-echo "$Blue Your bot logs located at $Orange ~/XTLS-Reality-bot/logs/" | sed 's/\$//g'
+echo "$Blue Your bot logs losudo cated at $Orange ~/XTLS-Reality-bot/logs/" | sed 's/\$//g'
 #thanks for install
 echo "$Green Thanks for install" | sed 's/\$//g'
 echo "$Defaul_color" | sed 's/\$//g'
