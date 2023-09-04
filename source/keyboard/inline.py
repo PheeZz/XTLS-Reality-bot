@@ -272,3 +272,63 @@ async def confirm_delete_config_keyboard(
         keyboard=keyboard, language_code=language_code
     )
     return keyboard
+
+
+async def help_guide_keyboard(language_code: str) -> InlineKeyboardMarkup:
+    keyboard = InlineKeyboardMarkup(row_width=1)
+    buttons = [
+        InlineKeyboardButton(
+            text=localizer.get_user_localized_text(
+                user_language_code=language_code,
+                text_localization=localizer.button.ios,
+            ),
+            callback_data="show_help_ios",
+        ),
+        InlineKeyboardButton(
+            text=localizer.get_user_localized_text(
+                user_language_code=language_code,
+                text_localization=localizer.button.android,
+            ),
+            callback_data="show_help_android",
+        ),
+        InlineKeyboardButton(
+            text=localizer.get_user_localized_text(
+                user_language_code=language_code,
+                text_localization=localizer.button.pc,
+            ),
+            callback_data="show_help_pc",
+        ),
+    ]
+    keyboard.add(*buttons)
+    keyboard = await insert_button_back_to_main_menu(
+        keyboard=keyboard, language_code=language_code
+    )
+    return keyboard
+
+
+async def download_app_for_connect_to_vpn_keyboard(
+    language_code: str, platform: str
+) -> InlineKeyboardMarkup:
+    match platform:
+        case "ios":
+            url = "https://apps.apple.com/us/app/v2box-v2ray-client/id6446814690"
+
+        case "android":
+            url = "https://play.google.com/store/apps/details?id=com.v2ray.ang"
+
+        case "pc":
+            url = "https://github.com/MatsuriDayo/nekoray/releases"
+
+    keyboard = InlineKeyboardMarkup(row_width=1)
+    button = InlineKeyboardButton(
+        text=localizer.get_user_localized_text(
+            user_language_code=language_code,
+            text_localization=localizer.button.download_app,
+        ),
+        url=url,
+    )
+    keyboard.insert(button)
+    keyboard = await insert_button_back_to_main_menu(
+        keyboard=keyboard, language_code=language_code
+    )
+    return keyboard

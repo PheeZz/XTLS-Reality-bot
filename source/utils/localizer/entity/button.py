@@ -15,8 +15,12 @@ class LocalizedButtonText(BaseLocalizedObject):
         return self._get_entity_text("pc")
 
     @property
-    def mobile(self) -> LocalizedText:
-        return self._get_entity_text("mobile")
+    def android(self) -> LocalizedText:
+        return self._get_entity_text("android")
+
+    @property
+    def ios(self) -> LocalizedText:
+        return self._get_entity_text("ios")
 
     @property
     def my_configs(self) -> LocalizedText:
@@ -85,3 +89,7 @@ class LocalizedButtonText(BaseLocalizedObject):
     @property
     def delete_config(self) -> LocalizedText:
         return self._get_entity_text("delete_config")
+
+    @property
+    def download_app(self) -> LocalizedText:
+        return self._get_entity_text("download_app")

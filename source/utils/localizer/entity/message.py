@@ -161,3 +161,19 @@ class LocalizedMessageText(BaseLocalizedObject):
     @property
     def config_deleted(self) -> LocalizedText:
         return self._get_entity_text("config_deleted")
+
+    @property
+    def help_guide_select_device(self) -> LocalizedText:
+        return self._get_entity_text("help_guide_select_device")
+
+    @property
+    def help_guide_ios(self) -> LocalizedText:
+        return self._get_entity_text("help_guide_ios")
+
+    @property
+    def help_guide_android(self) -> LocalizedText:
+        return self._get_entity_text("help_guide_android")
+
+    @property
+    def help_guide_pc(self) -> LocalizedText:
+        return self._get_entity_text("help_guide_pc")

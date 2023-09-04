@@ -6,7 +6,9 @@ async def set_commands(dp):
 
     await dp.bot.set_my_commands(
         commands=[
-            types.BotCommand(command="/start", description="start bot"),
+            types.BotCommand(command="/menu", description="Show main menu"),
+            types.BotCommand(command="/pay", description="Show payment methods"),
+            types.BotCommand(command="/help", description="Show connection help guide"),
         ]
     )
 

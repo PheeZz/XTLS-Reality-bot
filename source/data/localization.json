@@ -57,8 +57,8 @@
             "ru": "📄Понял! Теперь я сгенерирую для тебя новый конфиг. Это может занять несколько секунд, пожалуйста, подожди..."
         },
         "config_generated": {
-            "en": "✅ Config ready to use!\nName: <b>{config_name}</b>\n\n📝 Connection data:\n<code>{config_data}</code>\n\n🔙 To return to the menu, use the /start command",
-            "ru": "✅ Конфиг готов к использованию!\nНазвание: <b>{config_name}</b>\n\n📝 Данные для подключения:\n<code>{config_data}</code>\n\n🔙 Для возврата в меню используй команду /start"
+            "en": "✅ Config ready to use!\nName: <b>{config_name}</b>\n\n📝 Connection data:\n<code>{config_data}</code>\n\n🔙 To return to the menu, use the /menu command\n❓️To get help on how to connect, use the /help command",
+            "ru": "✅ Конфиг готов к использованию!\nНазвание: <b>{config_name}</b>\n\n📝 Данные для подключения:\n<code>{config_data}</code>\n\n🔙 Для возврата в меню используй команду /menu\n❓️Для получения справки по подключению используй команду /help"
         },
         "subscription_expired_notification": {
             "en": "{user}, I have bad news...😢\nYour VPN subscription <b>has expired</b>. To renew your subscription, please use the /pay command",
@@ -147,16 +147,36 @@
         "config_deleted": {
             "en": "🗑Config successfully deleted",
             "ru": "🗑Конфиг успешно удален"
+        },
+        "help_guide_select_device": {
+            "en": "📱Select your device",
+            "ru": "📱Выберите свое устройство"
+        },
+        "help_guide_ios": {
+            "en": "🍏️<b>IOS</b>\n\nFirst of all, download the V2BOX app using the button below.\n\n1.Open the app and click the plus sign at the top of the screen (or you can just scan the QR code, the button is just to the left).\n2.Copy your config (you can just click on it, it is formatted so that when you click it is automatically copied to the clipboard) and paste it into the app.\n3.The config is successfully imported, switch to the \"Home\" tab and connect by swiping the slider.\n\nIf you have any problems, please contact support.",
+            "ru": "🍏️<b>IOS</b>\n\nПрежде всего скачай приложение V2BOX, используя кнопку ниже.\n\n1.Открой приложение и нажми плюсик в верхней части экрана (или можешь просто осканировать QR код, кнопка чуть левее).\n2.Скопируй свой конфиг (можешь просто нажать на него, он отформатирован так, что при нажатии автоматически копируется в буфер обмена) и вставь его в приложение.\n3.Конфиг успешно импортирован, переключись на вкладку \"Home\" и подключись проведя пальцем по слайдеру.\n\nЕсли возникли какие-то проблемы, обратись в службу поддержки."
+        },
+        "help_guide_android": {
+            "en": "🤖<b>Android</b>\n\nFirst of all, download the V2RAYNG app using the button below.\n1.Open the app and click the button in the upper right corner.\n2.Click the plus sign button.\n3.Click the \"Import config from clipboard\" button.\n4.The config is successfully imported, click the checkmark button at the bottom to connect.\n\nIf you have any problems, please contact support.",
+            "ru": "🤖<b>Android</b>\n\nСкачай приложение V2RAYNG, используя кнопку ниже.\n1.Скопируй свой конфиг (можешь просто нажать на него, он отформатирован так, что при нажатии автоматически копируется в буфер обмена)\n2.Открой приложение и нажми на кнопку в верхнем правом углу.\n2.Нажми на кнопку со значком плюса.\n3.Нажми на кнопку \"Import config from clipboard\".\n4.Конфиг успешно импортирован, нажми на кнопку с изображением галочки внизу для подключения.\n\nЕсли возникли какие-то проблемы, обратись в службу поддержки."
+        },
+        "help_guide_pc": {
+            "en": "💻️<b>Windows/MacOS/Linux</b>\n\nDownload and install the NekoRay app using the button below.\n1.Open the app and click the \"Server\" button.\n2.Copy your config (you can just click on it, it is formatted so that when you click it is automatically copied to the clipboard).\n3.Paste it into the app.\n4.The config is successfully imported, click the \"Tun Mode\" and \"System Proxy\" checkboxes to connect.\n\nIf you have any problems, please contact support.",
+            "ru": "💻️<b>Windows/MacOS/Linux</b>\n\nСкачай и установи приложение NekoRay используя кнопку ниже.\n1.Открой приложение и нажми на кнопку \"Server\".\n2.Скопируй свой конфиг (можешь просто нажать на него, он отформатирован так, что при нажатии автоматически копируется в буфер обмена).\n3.Вставь его в приложение.\n4.Конфиг успешно импортирован, нажми на чекбоксы \"Tun Mode\" и \"System Proxy\" для подключения.\n\nЕсли возникли какие-то проблемы, обратись в службу поддержки."
         }
     },
     "button": {
         "pc": {
-            "en": "💻️PC",
-            "ru": "💻️ПК"
+            "en": "💻️Windows/MacOS/Linux",
+            "ru": "💻️Windows/MacOS/Linux"
         },
-        "mobile": {
-            "en": "📱Smartphone",
-            "ru": "📱Смартфон"
+        "android": {
+            "en": "🤖Android",
+            "ru": "🤖Android"
+        },
+        "ios": {
+            "en": "🍏IOS",
+            "ru": "🍏IOS"
         },
         "my_configs": {
             "en": "📄My configs",
@@ -225,6 +245,10 @@
         "delete_config": {
             "en": "🗑Delete config",
             "ru": "🗑Удалить конфиг"
+        },
+        "download_app": {
+            "en": "📲Download app",
+            "ru": "📲Скачать приложение"
         }
     }
 }
