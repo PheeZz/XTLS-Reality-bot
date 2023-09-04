@@ -34,12 +34,13 @@ class SubscriptionChecker:
             uuid
             for uuid in all_configs_uuid
             if not await db_manager.check_for_user_has_active_subscription_by_config_uuid(
-                uuid=uuid
+                config_uuid=uuid
             )
         ]
-        await self._disconnect_expired_configs_and_notify_users(
-            configs_uuid=expired_configs_uuid
-        )
+        if expired_configs_uuid:
+            await self._disconnect_expired_configs_and_notify_users(
+                configs_uuid=expired_configs_uuid
+            )
 
     async def _find_and_notify_users_with_last_day_left_subscription(self):
         """Find and notify users with last day left subscription"""

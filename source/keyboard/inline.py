@@ -144,14 +144,14 @@ async def insert_button_back_to_main_menu(
 
 
 async def user_configs_list_keyboard(
-    user_id: int, language_code: str
+    user_id: int, language_code: str, show_create_new_config_button: bool = True
 ) -> InlineKeyboardMarkup:
     users_configs = await db_manager.get_user_config_names_and_uuids(user_id=user_id)
     keyboard = InlineKeyboardMarkup(row_width=2, resize_keyboard=True)
     is_user_can_generate_new_config = (
         await db_manager.get_count_of_configs_user_can_create(user_id=user_id)
     ) > 0
-    if is_user_can_generate_new_config:
+    if is_user_can_generate_new_config and show_create_new_config_button:
         create_new_config_button = InlineKeyboardButton(
             text=localizer.get_user_localized_text(
                 user_language_code=language_code,
@@ -193,4 +193,82 @@ async def admin_support_question_notification_keyboard(
         ),
     )
     keyboard.insert(button)
+    return keyboard
+
+
+async def admin_user_info_keyboard(
+    language_code: str, user_id: int
+) -> InlineKeyboardMarkup:
+    keyboard = InlineKeyboardMarkup(row_width=1)
+    buttons = [
+        InlineKeyboardButton(
+            text=localizer.get_user_localized_text(
+                user_language_code=language_code,
+                text_localization=localizer.button.show_user_configs,
+            ),
+            callback_data=f"show_users_configs_{user_id}",
+        ),
+        InlineKeyboardButton(
+            text=localizer.get_user_localized_text(
+                user_language_code=language_code,
+                text_localization=localizer.button.give_bonus_configs,
+            ),
+            callback_data=f"give_bonus_configs_{user_id}",
+        ),
+        InlineKeyboardButton(
+            text=localizer.get_user_localized_text(
+                user_language_code=language_code,
+                text_localization=localizer.button.ban_user,
+            ),
+            callback_data=f"ban_user_{user_id}",
+        ),
+        InlineKeyboardButton(
+            text=localizer.get_user_localized_text(
+                user_language_code=language_code,
+                text_localization=localizer.button.give_user_subscription,
+            ),
+            callback_data=f"give_subscription_{user_id}",
+        ),
+    ]
+    keyboard.add(*buttons)
+    keyboard = await insert_button_back_to_main_menu(
+        keyboard=keyboard, language_code=language_code
+    )
+
+    return keyboard
+
+
+async def delete_specified_config_keyboard(
+    config_uuid: int, language_code: str
+) -> InlineKeyboardMarkup:
+    keyboard = InlineKeyboardMarkup(row_width=1)
+    button = InlineKeyboardButton(
+        text=localizer.get_user_localized_text(
+            user_language_code=language_code,
+            text_localization=localizer.button.delete_config,
+        ),
+        callback_data=f"delete_config_{config_uuid}",
+    )
+    keyboard.insert(button)
+    keyboard = await insert_button_back_to_main_menu(
+        keyboard=keyboard, language_code=language_code
+    )
+    return keyboard
+
+
+async def confirm_delete_config_keyboard(
+    config_uuid: int, language_code: str
+) -> InlineKeyboardMarkup:
+    keyboard = InlineKeyboardMarkup(row_width=1)
+    button = InlineKeyboardButton(
+        text=localizer.get_user_localized_text(
+            user_language_code=language_code,
+            text_localization=localizer.button.delete_config,
+        ),
+        callback_data=f"confirm_delete_config_{config_uuid}",
+    )
+    keyboard.insert(button)
+    keyboard = await insert_button_back_to_main_menu(
+        keyboard=keyboard, language_code=language_code
+    )
     return keyboard

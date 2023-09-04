@@ -5,6 +5,7 @@ from .accept_payment import *
 from .reject_payment import *
 from .delete_keyboard import *
 from .answer_support import *
+from .show_stats import *
 
 from .show_user import register_admin_show_user_handlers
 from source.utils.callback import support_callback
@@ -38,6 +39,12 @@ def register_admin_handlers(dp: Dispatcher):
         dp.register_message_handler(
             send_support_answer_to_user,
             state=AnswerSupport.wait_for_support_answer,
+        )
+
+        dp.register_callback_query_handler(
+            show_global_stats,
+            lambda call: call.data.startswith("show_statistics"),
+            state="*",
         )
 
         register_admin_show_user_handlers(dp)

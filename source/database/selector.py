@@ -1,6 +1,6 @@
 from loguru import logger
 from .connector import DatabaseConnector
-from source.utils.models import UserInfo, VpnConfigDB
+from source.utils.models import UserInfo, VpnConfigDB, GlobalStatistics
 from datetime import datetime
 from source.data import config
 
@@ -163,6 +163,21 @@ class Selector(DatabaseConnector):
         )
         return result[0][0]
 
+    async def check_for_user_has_active_subscription_by_user_id(
+        self, user_id: int
+    ) -> bool:
+        query = f"""--sql
+            SELECT EXISTS(
+                SELECT 1
+                FROM users
+                WHERE subscription_end_date >= NOW()::date
+                AND user_id = {user_id}
+            );
+        """
+        result = await self._execute_query(query)
+        logger.debug(f"User with id {user_id} have active subscription: {result[0][0]}")
+        return result[0][0]
+
     async def get_users_ids_by_configs_uuids(
         self, configs_uuid: list[str]
     ) -> list[int]:
@@ -180,8 +195,12 @@ class Selector(DatabaseConnector):
             WHERE config_uuid = ANY(ARRAY{configs_uuid});
         """
         result = await self._execute_query(query)
-        logger.debug(f"Users ids by configs uuids {configs_uuid}: {result}")
-        return [record[0] for record in result]
+        if result:
+            users_ids = [record[0] for record in result]
+        else:
+            users_ids = []
+        logger.debug(f"Users ids by configs uuids {configs_uuid}: {users_ids}")
+        return users_ids
 
     async def get_users_ids_with_last_day_left_subscription(self) -> list[int]:
         return await self._get_users_ids_by_subscription_ends_in_days(days=1)
@@ -216,8 +235,9 @@ class Selector(DatabaseConnector):
             WHERE user_id = {user_id};
         """
         result = await self._execute_query(query)
-        logger.debug(f"User {user_id} is banned: {result[0][0]}")
-        return result[0][0]
+        is_banned = result[0][0] if result else False
+        logger.debug(f"User {user_id} is banned: {is_banned}")
+        return is_banned
 
     async def get_config_name_by_config_uuid(self, config_uuid: str) -> str:
         query = f"""--sql
@@ -228,3 +248,27 @@ class Selector(DatabaseConnector):
         result = await self._execute_query(query)
         logger.debug(f"Config name by config uuid {config_uuid}: {result[0][0]}")
         return result[0][0]
+
+    async def get_global_stats(self) -> GlobalStatistics:
+        query = """--sql
+            SELECT
+                (SELECT COUNT(*) FROM users) AS users_registered,
+                (SELECT COUNT(*) FROM users WHERE is_banned) AS users_banned,
+                (SELECT COUNT(*) FROM users WHERE subscription_end_date >= NOW()::date) AS users_with_active_subscription,
+                (SELECT COUNT(*) FROM users WHERE subscription_end_date < NOW()::date) AS users_with_expired_subscription,
+                (SELECT COUNT(*) FROM users WHERE subscription_end_date = NOW()::date + INTERVAL '1 day') AS users_with_last_day_left_subscription,
+                (SELECT COUNT(*) FROM users WHERE subscription_end_date = NOW()::date + INTERVAL '2 days') AS users_with_two_days_left_subscription,
+                (SELECT COUNT(*) FROM vpn_configs) AS active_configs_count
+        """
+        result = await self._execute_query(query)
+        global_stats = GlobalStatistics(
+            users_registered=result[0][0],
+            users_banned=result[0][1],
+            users_with_active_subscription=result[0][2],
+            users_with_expired_subscription=result[0][3],
+            users_with_last_day_left_subscription=result[0][4],
+            users_with_two_days_left_subscription=result[0][5],
+            active_configs_count=result[0][6],
+        )
+        logger.debug(f"Global stats: {global_stats}")
+        return global_stats

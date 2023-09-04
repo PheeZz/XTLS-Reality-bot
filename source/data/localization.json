@@ -107,6 +107,46 @@
         "you_are_banned": {
             "en": "🤕You are banned from using the bot. If you think this is a mistake, please contact the administration.",
             "ru": "🤕Вам запрещено пользоваться ботом. Если вы считаете, что это ошибка, пожалуйста, свяжитесь с администрацией."
+        },
+        "global_stats": {
+            "en": "📊<b>Global statistics</b>\n\n👤Users registered: {users_registered}\n🤕Users banned: {users_banned}\n\n🗓️Users with active subscription: {users_with_active_subscription}\n🗓️Users with expired subscription: {users_with_expired_subscription}\n🗓️Users with last day left subscription: {users_with_last_day_left_subscription}\n🗓️Users with two days left subscription: {users_with_two_days_left_subscription}\n\n📄Active configs: {active_configs_count}",
+            "ru": "📊<b>Глобальная статистика</b>\n\n👤Пользователей зарегистрировано: {users_registered}\n🤕Пользователей заблокировано: {users_banned}\n\n🗓️Пользователей с активной подпиской: {users_with_active_subscription}\n🗓️Пользователей с истекшей подпиской: {users_with_expired_subscription}\n🗓️Пользователей с подпиской, которая заканчивается завтра: {users_with_last_day_left_subscription}\n🗓️Пользователей с подпиской, которая заканчивается через 2 дня: {users_with_two_days_left_subscription}\n\n📄Активных конфигов: {active_configs_count}"
+        },
+        "ask_admin_for_subscription_duration": {
+            "en": "⌛️Enter the number of days for which you want to give the user a subscription\n\n❔P.S: if you want to take away the user's subscription, enter a negative number\n❔P.P.S: if the user already has a subscription, it will be extended for the specified number of days, otherwise a new subscription will be issued for the specified number of days",
+            "ru": "⌛️Введите количество дней, на которое вы хотите выдать пользователю подписку\n\n❔P.S: если вы хотите забрать подписку у пользователя, введите отрицательное число\n❔P.P.S: если у пользователя уже есть подписка, то она будет продлена на указанное количество дней, иначе будет выдана новая подписка на указанное количество дней"
+        },
+        "subscription_duration_must_be_digit": {
+            "en": "❌The number of days must be a number, please try again",
+            "ru": "❌Количество дней должно быть числом, пожалуйста, попробуйте еще раз"
+        },
+        "admin_give_you_days_subscription": {
+            "en": "✅The administrator has given you a subscription for <b>{days}</b> days",
+            "ru": "✅Администратор выдал вам подписку на <b>{days}</b> дней"
+        },
+        "you_dont_have_subscription": {
+            "en": "❌You don't have an active subscription, please use the /pay command to get a subscription",
+            "ru": "❌У вас нет активной подписки, пожалуйста, воспользуйтесь командой /pay для получения подписки"
+        },
+        "ask_admin_for_count_of_bonus_generations_to_give": {
+            "en": "⌛️ Enter the number of bonus generations you want to set for the user\n\n❔P.S: if you reduce the number of bonus generations than it was - previously generated configs will not be deleted",
+            "ru": "⌛️Введите количество бонусных генераций, которые вы хотите установить для пользователя\n\n❔P.S: если вы уменьшите количество бонусных генераций, чем оно было - сгенерированные ранее конфиги не будут удалены"
+        },
+        "count_of_bonus_generations_to_give_must_be_digit": {
+            "en": "❌The number of bonus generations must be a number, please try again",
+            "ru": "❌Количество бонусных генераций должно быть числом, пожалуйста, попробуйте еще раз"
+        },
+        "admin_give_you_bonus_config_generations": {
+            "en": "✅The administrator has given you <b>{count}</b> bonus config generations",
+            "ru": "✅Администратор выдал вам <b>{count}</b> бонусных генераций конфигов"
+        },
+        "confirm_delete_config": {
+            "en": "🗑Are you sure you want to delete this config?",
+            "ru": "🗑Вы уверены, что хотите удалить этот конфиг?"
+        },
+        "config_deleted": {
+            "en": "🗑Config successfully deleted",
+            "ru": "🗑Конфиг успешно удален"
         }
     },
     "button": {
@@ -148,7 +188,7 @@
         },
         "accept": {
             "en": "✅Accept",
-            "ru": "✅Принять"
+            "ru": "✅Подтвердить"
         },
         "reject": {
             "en": "❌Reject",
@@ -173,6 +213,18 @@
         "answer_to_user_as_support": {
             "en": "📝Answer to user",
             "ru": "📝Ответить пользователю"
+        },
+        "give_bonus_configs": {
+            "en": "📄Give bonus configs",
+            "ru": "📄Выдать бонусные конфиги"
+        },
+        "ban_user": {
+            "en": "🤕(Un)Ban user",
+            "ru": "🤕(За/Раз)блокировать пользователя"
+        },
+        "delete_config": {
+            "en": "🗑Delete config",
+            "ru": "🗑Удалить конфиг"
         }
     }
 }

@@ -5,9 +5,13 @@ from aiogram.dispatcher import FSMContext
 from source.utils.states.user import GeneratingNewConfig
 from source.utils import qr_generator
 from source.utils.xray import xray_config
-from source.keyboard import inline
+
+from source.middlewares import rate_limit
+from ..check_is_user_have_active_subscription import is_user_subscribed
 
 
+@rate_limit(limit=1)
+@is_user_subscribed
 async def request_user_for_config_name(call: types.CallbackQuery, state: FSMContext):
     await call.message.edit_text(
         text=localizer.get_user_localized_text(
@@ -29,6 +33,7 @@ async def generate_config_for_user(message: types.Message, state: FSMContext):
         parse_mode=types.ParseMode.HTML,
     )
     await message.answer_chat_action(action=types.ChatActions.UPLOAD_PHOTO)
+
     config = await xray_config.add_new_user(
         config_name=config_name, user_telegram_id=message.from_user.id
     )
@@ -41,4 +46,5 @@ async def generate_config_for_user(message: types.Message, state: FSMContext):
         ).format(config_name=config_name, config_data=config),
         parse_mode=types.ParseMode.HTML,
     )
+
     await state.finish()

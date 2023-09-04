@@ -18,6 +18,7 @@ async def on_startup(dp):
     from loguru import logger
     import time
 
+    subscription_checker = SubscriptionChecker()
     middlewares.setup(dp)
     await set_commands(dp)
     handlers.setup(dp)

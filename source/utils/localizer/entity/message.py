@@ -117,3 +117,47 @@ class LocalizedMessageText(BaseLocalizedObject):
     @property
     def you_are_banned(self) -> LocalizedText:
         return self._get_entity_text("you_are_banned")
+
+    @property
+    def global_stats(self) -> LocalizedText:
+        return self._get_entity_text("global_stats")
+
+    @property
+    def ask_admin_for_subscription_duration(self) -> LocalizedText:
+        return self._get_entity_text("ask_admin_for_subscription_duration")
+
+    @property
+    def subscription_given(self) -> LocalizedText:
+        return self._get_entity_text("subscription_given")
+
+    @property
+    def admin_give_you_days_subscription(self) -> LocalizedText:
+        return self._get_entity_text("admin_give_you_days_subscription")
+
+    @property
+    def subscription_duration_must_be_digit(self) -> LocalizedText:
+        return self._get_entity_text("subscription_duration_must_be_digit")
+
+    @property
+    def you_dont_have_subscription(self) -> LocalizedText:
+        return self._get_entity_text("you_dont_have_subscription")
+
+    @property
+    def ask_admin_for_count_of_bonus_generations_to_give(self) -> LocalizedText:
+        return self._get_entity_text("ask_admin_for_count_of_bonus_generations_to_give")
+
+    @property
+    def count_of_bonus_generations_to_give_must_be_digit(self) -> LocalizedText:
+        return self._get_entity_text("count_of_bonus_generations_to_give_must_be_digit")
+
+    @property
+    def admin_give_you_bonus_config_generations(self) -> LocalizedText:
+        return self._get_entity_text("admin_give_you_bonus_config_generations")
+
+    @property
+    def confirm_delete_config(self) -> LocalizedText:
+        return self._get_entity_text("confirm_delete_config")
+
+    @property
+    def config_deleted(self) -> LocalizedText:
+        return self._get_entity_text("config_deleted")

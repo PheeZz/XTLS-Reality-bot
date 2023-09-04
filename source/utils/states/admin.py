@@ -7,3 +7,11 @@ class GetUserInfo(StatesGroup):
 
 class AnswerSupport(StatesGroup):
     wait_for_support_answer = State()
+
+
+class GiveSubscription(StatesGroup):
+    wait_for_subscription_duration = State()
+
+
+class GiveBonusConfigGenerations(StatesGroup):
+    wait_for_bonus_config_generations_count = State()

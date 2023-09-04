@@ -73,3 +73,15 @@ class LocalizedButtonText(BaseLocalizedObject):
     @property
     def answer_to_user_as_support(self) -> LocalizedText:
         return self._get_entity_text("answer_to_user_as_support")
+
+    @property
+    def give_bonus_configs(self) -> LocalizedText:
+        return self._get_entity_text("give_bonus_configs")
+
+    @property
+    def ban_user(self) -> LocalizedText:
+        return self._get_entity_text("ban_user")
+
+    @property
+    def delete_config(self) -> LocalizedText:
+        return self._get_entity_text("delete_config")

@@ -28,3 +28,14 @@ class SubscriptionStatus(Enum):
     expired = "EXPIRED"
     last_day_left = "LAST_DAY_LEFT"
     two_days_left = "TWO_DAYS_LEFT"
+
+
+@dataclass
+class GlobalStatistics:
+    users_registered: int
+    users_banned: int
+    users_with_active_subscription: int
+    users_with_expired_subscription: int
+    users_with_last_day_left_subscription: int
+    users_with_two_days_left_subscription: int
+    active_configs_count: int

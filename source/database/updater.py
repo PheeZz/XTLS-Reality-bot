@@ -43,3 +43,20 @@ class Updater(DatabaseConnector):
             return False
         logger.debug(f"Toggled user {user_id} banned status")
         return True
+
+    async def upsert_bonus_config_generations_to_user(
+        self, user_id: int, new_bonus_config_count: int
+    ):
+        query = f"""--sql
+            INSERT INTO bonus_configs_for_users (user_id, bonus_config_count)
+            VALUES ({user_id}, {new_bonus_config_count})
+            ON CONFLICT (user_id)
+            DO UPDATE SET bonus_config_count = {new_bonus_config_count};
+        """
+        if await self._execute_query(query) is False:
+            logger.error(
+                f"Error while setting bonus config generations to user {user_id}"
+            )
+            return False
+        logger.debug(f"Set bonus config generations to user {user_id}")
+        return True

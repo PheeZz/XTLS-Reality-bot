@@ -28,10 +28,10 @@ async def show_info_about_user(
     await message.answer(
         text=await create_user_info_message_text(user_id=user_id),
         parse_mode=types.ParseMode.HTML,
-        # reply_markup=await inline.admin_user_info_keyboard(
-        #     language_code=call.from_user.language_code,
-        #     user_id=user_id,
-        # ),
+        reply_markup=await inline.admin_user_info_keyboard(
+            language_code=call_or_message.from_user.language_code,
+            user_id=user_id,
+        ),
     )
 
 

@@ -29,4 +29,7 @@ async def show_specified_config(call: types.CallbackQuery, state: FSMContext):
             text_localization=localizer.message.config_generated,
         ).format(config_name=config_name, config_data=config_as_link_str),
         parse_mode=types.ParseMode.HTML,
+        reply_markup=await inline.delete_specified_config_keyboard(
+            config_uuid=config_uuid, language_code=call.from_user.language_code
+        ),
     )

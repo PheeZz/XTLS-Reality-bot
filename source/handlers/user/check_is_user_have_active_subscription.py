@@ -8,7 +8,7 @@ from source.keyboard import inline
 from loader import db_manager
 
 
-def is_user_banned(func):
+def is_user_subscribed(func):
     async def wrapper(
         message_or_call: types.Message | types.CallbackQuery, state: FSMContext
     ):
@@ -25,14 +25,13 @@ def is_user_banned(func):
                 message = message_or_call
                 language_code = message_or_call.from_user.language_code
 
-            if await db_manager.check_is_user_banned(user_id=user_id):
+            if not await db_manager.check_for_user_has_active_subscription_by_user_id(
+                user_id=user_id
+            ):
                 await message.answer(
                     text=localizer.get_user_localized_text(
                         user_language_code=language_code,
-                        text_localization=localizer.message.you_are_banned,
-                    ),
-                    reply_markup=await inline.insert_button_support(
-                        language_code=language_code,
+                        text_localization=localizer.message.you_dont_have_subscription,
                     ),
                 )
                 await state.finish()
