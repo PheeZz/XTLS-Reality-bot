@@ -73,7 +73,7 @@ fi
 #ask user for Database name
 echo ""
 echo "Enter Database name:"
-echo "Just press ENTER for use default name [$Blue xlts-reality-bot $White]" | sed 's/\$//g'
+echo "Just press ENTER for use default name [$Blue xlts_reality_bot $White]" | sed 's/\$//g'
 read database_name
 if [ -z "$database_name" ]
 then
@@ -279,10 +279,10 @@ git clone https://github.com/PheeZz/XTLS-Reality-bot.git
 #create venv and install bot dependencies
 cd XTLS-Reality-bot
 poetry install
+cd
 
 #configure bot .env file
-cd ~/XTLS-Reality-bot/source/data
-sudo cat <<EOF > .env
+sudo cat <<EOF > ~/XTLS-Reality-bot/source/data/.env
 TG_BOT_TOKEN = "$bot_token"
 PAYMENT_CARD = "$payment_card"
 ADMINS_IDS = "$admins_ids"
@@ -295,7 +295,7 @@ DB_USER_PASSWORD = "$database_passwd"
 DB_HOST = "localhost"
 DB_PORT = "5432"
 
-SERVER_CFG_PATH = "/usr/local/etc/xray/config.json"
+XRAY_CONFIG_PATH = "/usr/local/etc/xray/config.json"
 XRAY_PUBLICKEY = "$x25519_public_key"
 XRAY_SHORTID = "$short_id"
 USER_DEFAULT_MAX_CONFIGS_COUNT = "$max_configs_count"
@@ -304,9 +304,9 @@ EOF
 #try to run create_database_tables.py if it fails, then give db user superuser privileges
 cd ~/XTLS-Reality-bot
 $(poetry env info --path)/bin/python3.11 create_database_tables.py || -u postgres psql -c "ALTER USER $database_user WITH SUPERUSER;" && $(poetry env info --path)/bin/python3.11 create_database_tables.py
+cd
 
 #create systemd service for bot
-cd ~
 sudo cat <<EOF > /etc/systemd/system/xtls-reality-bot.service
 [Unit]
 Description=XTLS-Reality telegram bot
