@@ -75,6 +75,7 @@ class XrayConfiguiration:
         link = (
             f"vless://{uuid}@{self._server_ip_and_port}"
             f"?security=reality"
+            f"&sni={config.xray_sni}"
             "&fp=chrome"
             f"&pbk={config.xray_publickey}"
             f"&sid={config.xray_shortid}"

@@ -32,7 +32,7 @@ class Configuration:
         )
         self._server_ip: str = self._get_server_ip()
         self._server_country: str = self._get_server_country()
-
+        self._xray_sni: str = self._get_xray_sni()
     def _get_bot_token(self) -> str:
         bot_token = getenv("TG_BOT_TOKEN")
         if not bot_token:
@@ -115,6 +115,12 @@ class Configuration:
         server_country_code = ip_info.get_server_country_code()
         return f"{flag(server_country_code)} {server_country}"
 
+    def _get_xray_sni(self) -> str:
+        xray_sni = getenv("XRAY_SNI")
+        if not xray_sni:
+            raise DotEnvVariableNotFound("XRAY_SNI")
+        return xray_sni
+
     @property
     def bot_token(self) -> str:
         return self._bot_token
@@ -162,3 +168,7 @@ class Configuration:
     @property
     def server_country(self) -> str:
         return self._server_country
+
+    @property
+    def xray_sni(self)->str:
+        return self._xray_sni

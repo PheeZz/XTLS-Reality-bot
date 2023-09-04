@@ -198,6 +198,8 @@ sysctl -p
 x25519_keys=$(sudo /usr/local/bin/xray x25519)
 x25519_private_key=$(echo "$x25519_keys" | sed -n 1p | sed 's/Private key: //g')
 x25519_public_key=$(echo "$x25519_keys" | sed -n 2p | sed 's/Public key: //g')
+echo "$x25519_keys" | sed 's/\$//g'
+
 
 
 #get short id by using openssl
@@ -298,6 +300,7 @@ DB_PORT = "5432"
 XRAY_CONFIG_PATH = "/usr/local/etc/xray/config.json"
 XRAY_PUBLICKEY = "$x25519_public_key"
 XRAY_SHORTID = "$short_id"
+XRAY_SNI = "$site_url"
 USER_DEFAULT_MAX_CONFIGS_COUNT = "$max_configs_count"
 EOF
 
@@ -316,7 +319,7 @@ After=network.target
 [Service]
 Type=simple
 User=$current_os_user
-ExecStart=bin/bash -c 'cd ~/XTLS-Reality-bot/ && $(poetry env info --path)/bin/python3.11 app.py'
+ExecStart=/bin/bash -c 'cd ~/XTLS-Reality-bot/ && $(poetry env info --path)/bin/python3.11 app.py'
 Restart=on-failure
 
 [Install]
