@@ -138,12 +138,12 @@ fi
 #ask user for site url to hide reality
 echo ""
 echo "Enter site url to hide reality:"
-echo "Just press ENTER for use default url [$Blue www.microsoft.com $White]" | sed 's/\$//g'
+echo "Just press ENTER for use default url [$Blue dl.google.com $White]" | sed 's/\$//g'
 read site_url
 
 if [ -z "$site_url" ]
 then
-      site_url="www.microsoft.com"
+      site_url="dl.google.com"
 fi
 
 #all neccessary data is collected
