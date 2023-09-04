@@ -73,11 +73,11 @@ fi
 #ask user for Database name
 echo ""
 echo "Enter Database name:"
-echo "Just press ENTER for use default name [$Blue xlts_reality_bot $White]" | sed 's/\$//g'
+echo "Just press ENTER for use default name [$Blue xtls_reality_bot $White]" | sed 's/\$//g'
 read database_name
 if [ -z "$database_name" ]
 then
-      database_name="xlts_reality_bot"
+      database_name="xtls_reality_bot"
 fi
 
 #ask user for Database user
