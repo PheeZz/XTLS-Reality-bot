@@ -281,7 +281,7 @@ cd XTLS-Reality-bot
 poetry install
 
 #configure bot .env file
-cd ~/XTLS-Reality-bot/data
+cd ~/XTLS-Reality-bot/source/data
 sudo cat <<EOF > .env
 TG_BOT_TOKEN = "$bot_token"
 PAYMENT_CARD = "$payment_card"
@@ -331,13 +331,13 @@ systemctl start xtls-reality-bot.service
 echo "$Green Installation completed successfully" | sed 's/\$//g'
 echo "$Defaul_color" | sed 's/\$//g'
 
-echo "$Blue Your .env file losudo cated at $Orange ~/XTLS-Reality-bot/data/.env" | sed 's/\$//g'
+echo "$Blue Your .env file losudo cated at $Orange ~/XTLS-Reality-bot/source/data/.env" | sed 's/\$//g'
 echo "$Blue Do u want to watch it? [ y / $Blue N $White]" | sed 's/\$//g'
 read watch_env_file
 
 if [ "$watch_env_file" = "y" ]
 then
-      batsudo cat ~/XTLS-Reality-bot/data/.env
+      batsudo cat ~/XTLS-Reality-bot/source/data/.env
 fi
 
 echo "$Blue Your bot logs losudo cated at $Orange ~/XTLS-Reality-bot/logs/" | sed 's/\$//g'
