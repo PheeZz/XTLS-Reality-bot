@@ -81,14 +81,13 @@ then
 fi
 
 #ask user for Database user
-current_os_user=$(whoami)
 echo ""
 echo "Enter Database user:"
-echo "Just press ENTER for use default user [$Blue $current_os_user $White]" | sed 's/\$//g'
+echo "Just press ENTER for use default user [$Blue xray_bot_user $White]" | sed 's/\$//g'
 read database_user
 if [ -z "$database_user" ]
 then
-      database_user=$current_os_user
+      database_user="xray_bot_user"
 fi
 
 #ask user for Database password
@@ -109,7 +108,7 @@ read config_prefix
 
 if [ -z "$config_prefix" ]
 then
-      config_prefix="XrayPheeZzVPN"
+      config_prefix="XRAY_PheeZzVPN"
 fi
 
 #ask user for base subscription monthly price
@@ -269,17 +268,17 @@ EOF
 systemctl restart xray.service
 
 #configure postgresql
-su postgres -c "psql -c \"CREATE USER $database_user WITH PASSWORD '$database_passwd';\""
-su postgres -c "psql -c \"CREATE DATABASE $database_name;\""
-su postgres -c "psql -c \"GRANT ALL PRIVILEGES ON SCHEMA public TO $database_user;\""
-su postgres -c "psql -c \"GRANT ALL PRIVILEGES ON DATABASE $database_name TO $database_user;\""
+su - postgres -c "psql -c \"CREATE USER $database_user WITH PASSWORD '$database_passwd';\""
+su - postgres -c "psql -c \"CREATE DATABASE $database_name;\""
+su - postgres -c "psql -c \"GRANT ALL PRIVILEGES ON SCHEMA public TO $database_user;\""
+su - postgres -c "psql -c \"GRANT ALL PRIVILEGES ON DATABASE $database_name TO $database_user;\""
 
 #clone bot repo
 cd ~
 git clone https://github.com/PheeZz/XTLS-Reality-bot.git
 
 #create venv and install bot dependencies
-cd XTLS-Reality-bot
+cd ~/XTLS-Reality-bot
 poetry install
 cd
 
@@ -319,7 +318,7 @@ After=network.target
 [Service]
 Type=simple
 User=$current_os_user
-ExecStart=/bin/bash -c 'cd ~/XTLS-Reality-bot/ && $(poetry env info --path)/bin/python3.11 app.py'
+ExecStart=/bin/bash -c 'cd ~/XTLS-Reality-bot/ && $(poetry env info --executable) app.py'
 Restart=on-failure
 
 [Install]
