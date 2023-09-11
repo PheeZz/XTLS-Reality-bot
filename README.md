@@ -3,6 +3,8 @@
 <img src = "https://github.com/PheeZz/XTLS-Reality-bot/blob/main/source/data/img/logo/logo_wide.png?raw=true" width = 80%>
 </p>
 
+<div align = "center">
+
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![Packaged with Poetry](https://img.shields.io/badge/packaging-poetry-cyan.svg)](https://python-poetry.org/)</br>
 [![!Ubuntu](https://img.shields.io/badge/Ubuntu-E95420?style=for-the-badge&logo=ubuntu&logoColor=white)](https://ubuntu.com/)
@@ -11,6 +13,8 @@
 [![!Telegram](https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white)](https://telegram.org/)
 [![!Xray](https://img.shields.io/badge/Xray-000000?style=for-the-badge&logo=xray&logoColor=white)](https://xtls.github.io/)
 [![XTLS](https://img.shields.io/badge/XTLS-000000?style=for-the-badge&logo=xray&logoColor=white)](https://xtls.github.io/)
+
+</div>
 
 ## Hosted bot: [@vpn_xray_by_pheezz_bot](https://t.me/vpn_xray_by_pheezz_bot)
 
