@@ -5,7 +5,8 @@ Defaul_color=$'\e[0m'
 Orange=$'\e[1;33m'
 White=$'\e[1;37m'
 
-
+#some builds minimize system, unminimize it to get all default utilities
+yes | unminimize
 
 sudo apt install -y curl
 #clear screen after install curl
