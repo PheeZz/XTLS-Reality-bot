@@ -59,6 +59,7 @@ async def give_bonus_config_generations_to_user_and_notify_him(
             ).format(
                 count=bonus_config_generations_count,
             ),
+            parse_mode=types.ParseMode.HTML
         )
     except BotBlocked:
         logger.error(f"Bot blocked by user {user_id}")
