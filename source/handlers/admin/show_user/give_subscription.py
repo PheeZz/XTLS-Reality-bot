@@ -56,6 +56,7 @@ async def give_subscription_to_user_and_notify_him(
             ).format(
                 days=subscription_duration,
             ),
+            parse_mode=types.ParseMode.HTML
         )
     except BotBlocked:
         logger.error(f"Bot blocked by user {user_id}")
