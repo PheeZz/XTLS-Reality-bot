@@ -10,7 +10,7 @@ from pprint import pprint
 from copy import deepcopy
 
 
-class XrayConfiguiration:
+class XrayConfiguration:
     def __init__(self):
         self._config_path = config.xray_config_path
         self._server_ip_and_port = f"{config.server_ip}:443"
@@ -122,8 +122,8 @@ class XrayConfiguiration:
             await db_manager.delete_one_vpn_config_by_uuid(uuid=uuid)
             return True
 
-    async def disconnect_many_users_by_uuids(self, uuids: list[str]) -> bool:
-        """Disconnect many users by uuids
+    async def disconnect_many_uuids(self, uuids: list[str]) -> bool:
+        """Deletes many configs by uuids
 
         Args:
             uuids (list[str]): list of users uuids in xray config
@@ -149,3 +149,21 @@ class XrayConfiguiration:
         else:
             await db_manager.delete_many_vpn_configs_by_uuids(uuids=uuids)
             return True
+
+    async def disconnect_user_by_telegram_id(self, telegram_id: int) -> bool:
+        """Disconnect user by telegram id
+
+        Args:
+            telegram_id (int): user telegram id
+
+        Returns:
+            bool: True if user was disconnected, False if not
+        """
+        user_configs_uuids = await db_manager.get_user_config_names_and_uuids(
+            user_id=telegram_id
+        )
+        if user_configs_uuids:
+            uuids = [config.config_uuid for config in user_configs_uuids]
+            return await self.disconnect_many_uuids(uuids=uuids)
+        else:
+            return False
