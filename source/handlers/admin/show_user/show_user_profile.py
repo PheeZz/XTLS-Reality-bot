@@ -37,6 +37,12 @@ async def show_info_about_user(
 
 async def create_user_info_message_text(user_id: int) -> str:
     db_user_info = await db_manager.get_user_by_id(user_id=user_id)
+    subscription_days_left = (
+        db_user_info.subscription_end_date - datetime.now().date()
+    ).days
+    if subscription_days_left < 0:
+        subscription_days_left = 0
+
     language_code = (
         await bot.get_chat_member(chat_id=user_id, user_id=user_id)
     ).user.language_code
@@ -49,9 +55,7 @@ async def create_user_info_message_text(user_id: int) -> str:
         is_not_banned=db_user_info.is_not_banned,
         is_active_subscription=db_user_info.is_active_subscription,
         subscription_end_date=db_user_info.subscription_end_date.strftime("%d.%m.%Y"),
-        subscription_days_left=(
-            db_user_info.subscription_end_date - datetime.now().date()
-        ).days,
+        subscription_days_left=subscription_days_left,
         configs_count=db_user_info.configs_count,
         bonus_configs_count=db_user_info.bonus_configs_count,
         unused_configs_count=db_user_info.unused_configs_count,
