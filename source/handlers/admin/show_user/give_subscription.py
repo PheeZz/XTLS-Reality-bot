@@ -2,9 +2,9 @@ from aiogram import types
 from aiogram.dispatcher import FSMContext
 from aiogram.utils.exceptions import BotBlocked
 
-from source.keyboard import inline
 from source.utils.states.admin import GiveSubscription
 from source.utils import localizer
+from source.utils.etc import is_text_int_number
 from ..show_user.show_user_profile import show_info_about_user
 from loader import db_manager
 
@@ -26,7 +26,7 @@ async def ask_admin_for_subscription_duration(
 
 
 async def check_is_duration_digit(message: types.Message, state: FSMContext):
-    if not message.text.isdigit():
+    if not is_text_int_number(message.text):
         await message.answer(
             text=localizer.get_user_localized_text(
                 user_language_code=message.from_user.language_code,

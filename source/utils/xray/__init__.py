@@ -1,5 +1,5 @@
-from .xray_configuration import XrayConfiguiration
+from .xray_configuration import XrayConfiguration
 
-xray_config = XrayConfiguiration()
+xray_config = XrayConfiguration()
 
 __all__ = ["xray_config"]

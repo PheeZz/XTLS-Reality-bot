@@ -69,7 +69,7 @@ class SubscriptionChecker:
         users_ids_with_expired_subscription = (
             await db_manager.get_users_ids_by_configs_uuids(configs_uuid=configs_uuid)
         )
-        await xray_config.disconnect_many_users_by_uuids(uuids=configs_uuid)
+        await xray_config.disconnect_many_uuids(uuids=configs_uuid)
         await self._notify_users_about_subscription_status(
             users_ids=users_ids_with_expired_subscription,
             status=SubscriptionStatus.expired.value,
