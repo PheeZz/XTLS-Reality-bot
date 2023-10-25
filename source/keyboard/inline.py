@@ -45,9 +45,7 @@ async def start_menu_kb(language_code: str, user_id: int):
     for button in buttons:
         keyboard.insert(button)
 
-    keyboard = await insert_button_support(
-        keyboard=keyboard, language_code=language_code
-    )
+    keyboard = await insert_button_support(keyboard=keyboard, language_code=language_code)
 
     if user_id in config.admins_ids:
         keyboard = await add_buttons_for_admin_main_menu(
@@ -57,9 +55,7 @@ async def start_menu_kb(language_code: str, user_id: int):
     return keyboard
 
 
-async def add_buttons_for_admin_main_menu(
-    keyboard: InlineKeyboardMarkup, language_code: str
-):
+async def add_buttons_for_admin_main_menu(keyboard: InlineKeyboardMarkup, language_code: str):
     buttons = [
         InlineKeyboardButton(
             text=localizer.get_user_localized_text(
@@ -171,9 +167,7 @@ async def user_configs_list_keyboard(
         ]
         keyboard.add(*exist_configs_buttons)
 
-    keyboard = await insert_button_back_to_main_menu(
-        keyboard=keyboard, language_code=language_code
-    )
+    keyboard = await insert_button_back_to_main_menu(keyboard=keyboard, language_code=language_code)
     return keyboard
 
 
@@ -187,7 +181,7 @@ async def admin_support_question_notification_keyboard(
             text_localization=localizer.button.answer_to_user_as_support,
         ),
         callback_data=support_callback.new(
-            question=question,
+            question=question[:20],  # just for avoid telegram exception (too long object)
             from_user=from_user,
             answer=answer if answer else "NULL",
         ),
@@ -196,9 +190,7 @@ async def admin_support_question_notification_keyboard(
     return keyboard
 
 
-async def admin_user_info_keyboard(
-    language_code: str, user_id: int
-) -> InlineKeyboardMarkup:
+async def admin_user_info_keyboard(language_code: str, user_id: int) -> InlineKeyboardMarkup:
     keyboard = InlineKeyboardMarkup(row_width=1)
     buttons = [
         InlineKeyboardButton(
@@ -231,9 +223,7 @@ async def admin_user_info_keyboard(
         ),
     ]
     keyboard.add(*buttons)
-    keyboard = await insert_button_back_to_main_menu(
-        keyboard=keyboard, language_code=language_code
-    )
+    keyboard = await insert_button_back_to_main_menu(keyboard=keyboard, language_code=language_code)
 
     return keyboard
 
@@ -250,9 +240,7 @@ async def delete_specified_config_keyboard(
         callback_data=f"delete_config_{config_uuid}",
     )
     keyboard.insert(button)
-    keyboard = await insert_button_back_to_main_menu(
-        keyboard=keyboard, language_code=language_code
-    )
+    keyboard = await insert_button_back_to_main_menu(keyboard=keyboard, language_code=language_code)
     return keyboard
 
 
@@ -268,9 +256,7 @@ async def confirm_delete_config_keyboard(
         callback_data=f"confirm_delete_config_{config_uuid}",
     )
     keyboard.insert(button)
-    keyboard = await insert_button_back_to_main_menu(
-        keyboard=keyboard, language_code=language_code
-    )
+    keyboard = await insert_button_back_to_main_menu(keyboard=keyboard, language_code=language_code)
     return keyboard
 
 
@@ -300,9 +286,7 @@ async def help_guide_keyboard(language_code: str) -> InlineKeyboardMarkup:
         ),
     ]
     keyboard.add(*buttons)
-    keyboard = await insert_button_back_to_main_menu(
-        keyboard=keyboard, language_code=language_code
-    )
+    keyboard = await insert_button_back_to_main_menu(keyboard=keyboard, language_code=language_code)
     return keyboard
 
 
@@ -328,7 +312,5 @@ async def download_app_for_connect_to_vpn_keyboard(
         url=url,
     )
     keyboard.insert(button)
-    keyboard = await insert_button_back_to_main_menu(
-        keyboard=keyboard, language_code=language_code
-    )
+    keyboard = await insert_button_back_to_main_menu(keyboard=keyboard, language_code=language_code)
     return keyboard
