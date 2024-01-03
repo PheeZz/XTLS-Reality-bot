@@ -1,0 +1,74 @@
+version: "3.8"
+
+services:
+  db:
+    container_name: xtls_bot_db
+    build: ./source/database
+    volumes:
+      - xtls_bot_db_data:/var/lib/postgresql/data
+      - ./source/database/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - 5433:5432
+    environment:
+      POSTGRES_USER: xtls_bot
+      POSTGRES_PASSWORD: besthashedpassword
+      POSTGRES_DB: xtls_bot_db_docker
+    networks:
+      - xtls_bot_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U xtls_bot -d xtls_bot_db_docker"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    restart: unless-stopped
+
+  bot:
+    container_name: xtls_bot_source_docker
+    build: .
+    depends_on:
+      - db
+    environment:
+      DB_USER: xtls_bot
+      DB_USER_PASSWORD: besthashedpassword
+      DB_NAME: xtls_bot_db_docker
+      DB_HOST: db
+      DB_PORT: 5432
+      # TG_BOT_TOKEN: 123:123
+      TG_BOT_TOKEN: 5586335425:AAGWk08NU6tzneGSSCI-kSUK7NLEK8tEviU
+      # ADMINS_IDS: 123
+      ADMINS_IDS: 433364417
+      PAYMENT_CARD: 4242424242424242
+      CONFIGS_PREFIX: PheeZzXTLS
+      BASE_SUBSCRIPTION_MONTHLY_PRICE: 10$
+      USER_DEFAULT_MAX_CONFIGS_COUNT: 2
+      XRAY_PUBLICKEY: put_public_key_here # openssl pkey -in x25519-priv.pem -pubout -out x25519-pub.pem
+      XRAY_SHORTID: put_short_id_here # like in config.json
+      XRAY_SNI: dl.google.com # like in config.json
+      XRAY_CONFIG_PATH: /etc/xray/config.json
+      IS_IN_DOCKER: True
+    networks:
+      - xtls_bot_network
+    restart: unless-stopped
+    command: bash -c "python app.py"
+
+  xray:
+    container_name: xtls_bot_xray_docker
+    image: teddysun/xray:latest
+    restart: always
+    # ports:
+    #   - "443:443"
+    #   - "80:80"
+    #   - "443:443/udp"
+    #   - "80:80/udp"
+    volumes:
+      - /etc/xray:/etc/xray
+    networks:
+      - xtls_bot_network
+
+networks:
+  xtls_bot_network:
+    driver: bridge
+
+volumes:
+  xtls_bot_db_data:

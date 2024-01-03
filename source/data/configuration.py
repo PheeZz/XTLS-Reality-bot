@@ -10,12 +10,13 @@ class DotEnvVariableNotFound(Exception):
         self.variable_name = variable_name
 
     def __str__(self):
-        return f"Variable {self.variable_name} not found in .env file"
+        return f"Variable {self.variable_name} not found in .env file or docker-compose.yml file."
 
 
 class Configuration:
     def __init__(self):
-        load_dotenv()
+        if not os.getenv("IS_IN_DOCKER"):
+            load_dotenv()
         self._bot_token: str = self._get_bot_token()
         self._admins_ids: list[int] = self._get_admins_ids()
         self._payment_card: str = self._get_payment_card()
@@ -27,12 +28,11 @@ class Configuration:
         self._xray_publickey: str = self._get_xray_publickey()
         self._xray_shortid: str = self._get_xray_shortid()
         self._xray_config_path: str = self._get_xray_config_path()
-        self._default_max_configs_count: int = (
-            self._get_user_default_max_configs_count()
-        )
+        self._default_max_configs_count: int = self._get_user_default_max_configs_count()
         self._server_ip: str = self._get_server_ip()
         self._server_country: str = self._get_server_country()
         self._xray_sni: str = self._get_xray_sni()
+
     def _get_bot_token(self) -> str:
         bot_token = getenv("TG_BOT_TOKEN")
         if not bot_token:
@@ -170,5 +170,5 @@ class Configuration:
         return self._server_country
 
     @property
-    def xray_sni(self)->str:
+    def xray_sni(self) -> str:
         return self._xray_sni

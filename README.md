@@ -20,7 +20,7 @@
 
 
 ## Tested on
-- Ubuntu 22.04 LTS
+- Ubuntu 23.04 LTS
 > RAM: 2GB <br>
 > CPU core: 1 <br>
 > Storage: 30GB
@@ -31,14 +31,83 @@
 > Storage: 40GB
 
 ## Installation methods
-### 1. Using `autoinstall.sh` script (recommended)
+### 1 Using docker-compose
+#### 1.1 Create `/etc/xray/config.json` for xray
+```json
+{
+    "log": {
+        "loglevel": "info"
+    },
+    "routing": {
+        "rules": [],
+        "domainStrategy": "AsIs"
+    },
+    "inbounds": [
+        {
+            "port": 443,
+            "protocol": "vless",
+            "tag": "vless_tls",
+            "settings": {
+                "clients": [],
+                "decryption": "none"
+            },
+            "streamSettings": {
+                "network": "tcp",
+                "security": "reality",
+                "realitySettings": {
+                    "show": false,
+                    "dest": "dl.google.com:443",  < anything else if you know to do
+                    "xver": 0,
+                    "serverNames": [
+                        "dl.google.com" < anything else if you know to do
+                    ],
+                    "privateKey": "<your private key>", < openssl genpkey -algorithm x25519 -out x25519-priv.pem
+                    "minClientVer": "",
+                    "maxClientVer": "",
+                    "maxTimeDiff": 0,
+                    "shortIds": [
+                        "<your short id>" < openssl rand -hex 8
+                    ]
+                }
+            },
+            "sniffing": {
+                "enabled": true,
+                "destOverride": [
+                    "http",
+                    "tls"
+                ]
+            }
+        }
+    ],
+    "outbounds": [
+        {
+            "protocol": "freedom",
+            "tag": "direct"
+        },
+        {
+            "protocol": "blackhole",
+            "tag": "block"
+        }
+    ]
+}
+
+```
+
+#### 1.2 Edit `docker-compose.yaml` with your ENV variables
+
+#### 1.3 Run compose
+```bash
+docker compose up -d --build
+```
+
+### 2 Using `autoinstall.sh` script (depricated, but still works)
 ```bash
 wget https://raw.githubusercontent.com/PheeZz/XTLS-Reality-bot/main/autoinstall.sh && chmod +x autoinstall.sh && ./autoinstall.sh
 ```
 
-### 2. Manual
+### 3 Manual
 
-#### 2.1 First of all - install dependencies
+#### 3.1 First of all - install dependencies
 > git, curl, postgres
 ```bash
 sudo apt install -y git curl postgresql postgresql-contrib
@@ -60,9 +129,9 @@ pip3.11 install poetry
 bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install
 ```
 
-#### 2.2 Get keypair and shortid
+#### 3.2 Get keypair and shortid
 
-##### 2.2.1 Private and public keys
+##### 3.2.1 Private and public keys
 ```bash
 /usr/local/bin/xray x25519
 ```
@@ -72,7 +141,7 @@ Private key: CJcqQtcklhCMfiFW8A4BA0XsgKmRJk4-_l42bpnVn0I
 Public key: JjAXPY-s2FkvVypfGN2c71NQsCW489Vxjtayo6hLmVM
 ```
 
-##### 2.2.2 Get shortid
+##### 3.2.2 Get shortid
 ```bash
 openssl rand -hex 8
 ```
@@ -80,7 +149,7 @@ openssl rand -hex 8
 ```text
 0ed36d458733a0bc
 ```
-#### 2.3 Configure XRAY config.json file
+#### 3.3 Configure XRAY config.json file
 > Path: `/usr/local/etc/xray/config.json`
 <details>
    <summary><code>config.json</code></summary>
@@ -150,7 +219,7 @@ openssl rand -hex 8
 ```bash
 systemctl restart xray.service
 ```
-#### 2.4 Optional (!) confugure BBR
+#### 3.4 Optional (!) confugure BBR
 To increase performance, you can configure Bottleneck Bandwidth and
 Round-trip propagation time (BBR) congestion control algorithm on the server
 ```bash
@@ -158,7 +227,7 @@ echo "net.core.default_qdisc=fq" >> /etc/sysctl.conf
 echo "net.ipv4.tcp_congestion_control=bbr" >> /etc/sysctl.conf
 sysctl -p
 ```
-#### 2.5 Create postgresql user and database
+#### 3.5 Create postgresql user and database
 
 >enter psql shell
 ```bash
@@ -182,18 +251,18 @@ ALTER USER <user_name> WITH SUPERUSER;
 \q
 ```
 
-#### 2.5 Clone this repo
+#### 3.5 Clone this repo
 ```bash
 git clone https://github.com/PheeZz/XTLS-Reality-bot.git
 ```
 
-#### 2.6 Create venv and install python dependencies
+#### 3.6 Create venv and install python dependencies
 ```bash
 cd XTLS-Reality-bot
 poetry install
 ```
 
-#### 2.7 Configure .env file
+#### 3.7 Configure .env file
 ```bash
 nano source/data/.env
 ```
@@ -220,19 +289,19 @@ DB_HOST = "localhost"
 DB_PORT = "5432"
 
 XRAY_CONFIG_PATH = "/usr/local/etc/xray/config.json"
-XRAY_PUBLICKEY = "<public key from step 2.2.1>"
-XRAY_SHORTID = "<short id from step 2.2.1>"
+XRAY_PUBLICKEY = "<public key from step 3.3.1>"
+XRAY_SHORTID = "<short id from step 3.3.1>"
 XRAY_SNI = "dl.google.com"
 #default max configs count for each user (admin can give bonus configs to any user through admin panel)
 USER_DEFAULT_MAX_CONFIGS_COUNT = "2"
 ```
 
-#### 2.8 Create database tables
+#### 3.8 Create database tables
 ```bash
 $(poetry env info --executable) create_database_tables.py
 ```
 
-#### 2.9 Create .service file for your bot
+#### 3.9 Create .service file for your bot
 ```bash
 nano /etc/systemd/system/xtls-reality-bot.service
 ```
@@ -251,7 +320,7 @@ Restart=on-failure
 WantedBy=multi-user.target
 ```
 
-#### 2.10 Enable and start it
+#### 3.10 Enable and start it
 ```bash
 systemctl enable xtls-reality-bot.service
 systemctl start xtls-reality-bot.service
@@ -263,7 +332,7 @@ systemctl start xtls-reality-bot.service
 - On some systems may require to change postgresql database encoding (in case of config names are in any language other than English). <b>StackOverflow</b>: [Postgres issue encoding "UTF8" has no equivalent in encoding "LATIN1"](https://stackoverflow.com/questions/14525505/postgres-issue-encoding-utf8-has-no-equivalent-in-encoding-latin1)
 - If some error with XRAY occurred try this guides (RU): <br>
   1. [Bleeding-edge обход блокировок с полной маскировкой: настраиваем сервер и клиент XRay с XTLS-Reality быстро и просто](https://habr.com/ru/articles/731608/)
-  2. [3X-UI: Shadowsocks-2022 & XRay (XTLS) сервер с простой настройкой и приятным интерфейсом](https://habr.com/ru/articles/735536/)
+  3. [3X-UI: Shadowsocks-2022 & XRay (XTLS) сервер с простой настройкой и приятным интерфейсом](https://habr.com/ru/articles/735536/)
   3. [Обход блокировок: настройка сервера XRay для Shadowsocks-2022 и VLESS с XTLS-Vision, Websockets и фейковым веб-сайтом](https://habr.com/ru/articles/728836/)
 
 
