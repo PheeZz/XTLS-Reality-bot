@@ -1,9 +1,10 @@
 # DON'T TOUCH THIS IMPORT
-from loader import dp
 from aiogram import Dispatcher
 
-from .user import register_user_handlers
+from loader import dp
+
 from .admin import register_admin_handlers
+from .user import register_user_handlers
 
 
 def setup(dp: Dispatcher):

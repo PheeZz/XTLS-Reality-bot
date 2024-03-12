@@ -1,6 +1,6 @@
 from dataclasses import fields
 
-from .entity import LocalizedText, LocalizedButtonText, LocalizedMessageText
+from .entity import LocalizedButtonText, LocalizedMessageText, LocalizedText
 
 
 class Localizer:

@@ -1,10 +1,9 @@
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 
+from loader import db_manager
 from source.keyboard import inline
 from source.utils import localizer
-
-from loader import db_manager
 
 
 async def show_global_stats(call: types.CallbackQuery, state: FSMContext):

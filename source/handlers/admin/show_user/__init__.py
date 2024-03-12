@@ -1,11 +1,11 @@
 from aiogram import Dispatcher
 from loguru import logger
 
-from .show_user_profile import *
-from .show_users_configs import *
-from .give_subscription import *
 from .ban_toggle import *
 from .give_bonus_configs import *
+from .give_subscription import *
+from .show_user_profile import *
+from .show_users_configs import *
 
 
 def register_admin_show_user_handlers(dp: Dispatcher):

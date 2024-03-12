@@ -1,7 +1,6 @@
-from loguru import logger
-
 from aiogram import types
 from aiogram.dispatcher import FSMContext
+from loguru import logger
 
 from source.handlers.admin.show_user.show_user_profile import (
     create_user_info_message_text,

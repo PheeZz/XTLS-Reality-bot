@@ -1,11 +1,10 @@
-from source.utils import localizer
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 
-from source.keyboard import inline
 from loader import db_manager
-
+from source.keyboard import inline
 from source.middlewares import rate_limit
+from source.utils import localizer
 
 
 @rate_limit(limit=1)

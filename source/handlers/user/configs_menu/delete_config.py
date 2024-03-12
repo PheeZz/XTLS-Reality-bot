@@ -1,11 +1,10 @@
-from source.utils import localizer
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 
 from source.keyboard import inline
-from source.utils.xray import xray_config
-
 from source.middlewares import rate_limit
+from source.utils import localizer
+from source.utils.xray import xray_config
 
 
 @rate_limit(limit=1)

@@ -1,25 +1,21 @@
-from loguru import logger
-from source.utils import localizer
 from aiogram import types
 from aiogram.dispatcher import FSMContext
+from loguru import logger
 
+from loader import db_manager
 from source.data import config
 from source.keyboard import inline
-from loader import db_manager
+from source.utils import localizer
 
 
 def is_user_subscribed(func):
-    async def wrapper(
-        message_or_call: types.Message | types.CallbackQuery, state: FSMContext
-    ):
+    async def wrapper(message_or_call: types.Message | types.CallbackQuery, state: FSMContext):
         user_id = message_or_call.from_user.id
         if user_id not in config.admins_ids:
             if isinstance(message_or_call, types.CallbackQuery):
                 message = message_or_call.message
                 language_code = (
-                    await message_or_call.bot.get_chat_member(
-                        chat_id=user_id, user_id=user_id
-                    )
+                    await message_or_call.bot.get_chat_member(chat_id=user_id, user_id=user_id)
                 ).user.language_code
             else:
                 message = message_or_call

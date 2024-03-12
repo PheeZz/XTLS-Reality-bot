@@ -1,12 +1,11 @@
-from source.utils import localizer
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 
+from source.middlewares import rate_limit
+from source.utils import localizer, qr_generator
 from source.utils.states.user import GeneratingNewConfig
-from source.utils import qr_generator
 from source.utils.xray import xray_config
 
-from source.middlewares import rate_limit
 from ..check_is_user_have_active_subscription import is_user_subscribed
 
 

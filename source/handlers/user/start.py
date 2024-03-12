@@ -1,14 +1,14 @@
-from loguru import logger
-from source.utils import localizer
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 from aiogram.utils.markdown import hbold
+from loguru import logger
 
-from source.keyboard import inline
-from source.data import config
 from loader import db_manager
-
+from source.data import config
+from source.keyboard import inline
 from source.middlewares import rate_limit
+from source.utils import localizer
+
 from .check_is_user_banned import is_user_banned
 
 
@@ -30,14 +30,14 @@ async def start(message: types.Message, state: FSMContext):
     await message.answer(
         text=localizer.get_user_localized_text(
             user_language_code=message.from_user.language_code,
-            text_localization=localizer.message.new_user_greeting
-            if new_user
-            else localizer.message.greeting,
+            text_localization=(
+                localizer.message.new_user_greeting if new_user else localizer.message.greeting
+            ),
         ).format(
             user=message.from_user.full_name,
-            is_admin_access=hbold("[ADMIN ACCESS]\n\n")
-            if message.from_user.id in config.admins_ids
-            else "",
+            is_admin_access=(
+                hbold("[ADMIN ACCESS]\n\n") if message.from_user.id in config.admins_ids else ""
+            ),
             server_country=config.server_country,
         ),
         reply_markup=await inline.start_menu_kb(
@@ -59,11 +59,13 @@ async def main_menu_by_button(call: types.CallbackQuery, state: FSMContext):
             text_localization=localizer.message.greeting,
         ).format(
             user=call.from_user.full_name,
-            is_admin_access=hbold(
-                "[ADMIN ACCESS]\n\n",
-            )
-            if call.from_user.id in config.admins_ids
-            else "",
+            is_admin_access=(
+                hbold(
+                    "[ADMIN ACCESS]\n\n",
+                )
+                if call.from_user.id in config.admins_ids
+                else ""
+            ),
             server_country=config.server_country,
         ),
         reply_markup=await inline.start_menu_kb(

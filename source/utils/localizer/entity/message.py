@@ -1,5 +1,5 @@
-from .localized_text_model import LocalizedText
 from .base_localized_object import BaseLocalizedObject
+from .localized_text_model import LocalizedText
 
 
 class LocalizedMessageText(BaseLocalizedObject):

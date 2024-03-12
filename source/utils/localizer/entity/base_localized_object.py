@@ -1,7 +1,8 @@
 import json
-from .localized_text_model import LocalizedText
 
 from loguru import logger
+
+from .localized_text_model import LocalizedText
 
 
 class BaseLocalizedObject:
@@ -33,6 +34,4 @@ class BaseLocalizedObject:
             raise KeyError(
                 f"Key 'en' not found in localization.json for entity [{entity}] of type {self._entity_type}"
             )
-        return LocalizedText(
-            en=en_localization, ru=entity_text.get("ru", en_localization)
-        )
+        return LocalizedText(en=en_localization, ru=entity_text.get("ru", en_localization))

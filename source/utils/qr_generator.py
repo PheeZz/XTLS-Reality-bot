@@ -1,9 +1,10 @@
-import qrcode
-from qrcode.main import QRCode
-from qrcode.image.styledpil import StyledPilImage
-from qrcode.image.styles.moduledrawers.pil import RoundedModuleDrawer
-from qrcode.image.styles.colormasks import SquareGradiantColorMask
 from io import BytesIO
+
+import qrcode
+from qrcode.image.styledpil import StyledPilImage
+from qrcode.image.styles.colormasks import SquareGradiantColorMask
+from qrcode.image.styles.moduledrawers.pil import RoundedModuleDrawer
+from qrcode.main import QRCode
 
 
 def create_qr_code_from_config_as_link_str(config: str) -> BytesIO:
@@ -28,9 +29,7 @@ def create_qr_code_from_config_as_link_str(config: str) -> BytesIO:
     img = qr.make_image(
         image_factory=StyledPilImage,
         module_drawer=RoundedModuleDrawer(),
-        color_mask=SquareGradiantColorMask(
-            center_color=(220, 0, 220), edge_color=(0, 0, 64)
-        ),
+        color_mask=SquareGradiantColorMask(center_color=(220, 0, 220), edge_color=(0, 0, 64)),
         embeded_image_path="source/data/img/logo/logo_circle.png",
     )
 

@@ -1,14 +1,14 @@
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 from aiogram.utils.exceptions import BotBlocked
+from loguru import logger
 
-from source.utils.states.admin import GiveBonusConfigGenerations
+from loader import db_manager
 from source.utils import localizer
 from source.utils.etc import is_text_int_number
-from ..show_user.show_user_profile import show_info_about_user
-from loader import db_manager
+from source.utils.states.admin import GiveBonusConfigGenerations
 
-from loguru import logger
+from ..show_user.show_user_profile import show_info_about_user
 
 
 async def ask_admin_for_count_of_bonus_generations_to_give(
@@ -37,9 +37,7 @@ async def check_is_count_of_bonus_generations_to_give_digit(
         )
         return
     await state.update_data(bonus_config_generations_count=int(message.text))
-    await give_bonus_config_generations_to_user_and_notify_him(
-        message=message, state=state
-    )
+    await give_bonus_config_generations_to_user_and_notify_him(message=message, state=state)
 
 
 async def give_bonus_config_generations_to_user_and_notify_him(
@@ -60,7 +58,7 @@ async def give_bonus_config_generations_to_user_and_notify_him(
             ).format(
                 count=bonus_config_generations_count,
             ),
-            parse_mode=types.ParseMode.HTML
+            parse_mode=types.ParseMode.HTML,
         )
     except BotBlocked:
         logger.error(f"Bot blocked by user {user_id}")

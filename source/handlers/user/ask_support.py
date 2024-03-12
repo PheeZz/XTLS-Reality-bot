@@ -1,20 +1,17 @@
-from loguru import logger
-from source.utils import localizer
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 from aiogram.utils.exceptions import BotBlocked
+from loguru import logger
 
-from source.keyboard import inline
 from source.data import config
-from source.utils.states.user import AskSupport
-
+from source.keyboard import inline
 from source.middlewares import rate_limit
+from source.utils import localizer
+from source.utils.states.user import AskSupport
 
 
 @rate_limit(limit=1)
-async def ask_user_for_question_to_support(
-    call: types.CallbackQuery, state: FSMContext
-):
+async def ask_user_for_question_to_support(call: types.CallbackQuery, state: FSMContext):
     await state.finish()
     await call.message.edit_text(
         text=localizer.get_user_localized_text(
@@ -42,9 +39,7 @@ async def forward_question_to_admins(message: types.Message, state: FSMContext):
     )
     for admin_id in config.admins_ids:
         forwarded_message = await message.forward(admin_id)
-        admin_user = (
-            await message.bot.get_chat_member(chat_id=admin_id, user_id=admin_id)
-        ).user
+        admin_user = (await message.bot.get_chat_member(chat_id=admin_id, user_id=admin_id)).user
         try:
             await forwarded_message.reply(
                 text=localizer.get_user_localized_text(
@@ -52,17 +47,21 @@ async def forward_question_to_admins(message: types.Message, state: FSMContext):
                     text_localization=localizer.message.admin_notification_about_new_support_question,
                 ).format(
                     user_id=message.from_user.id,
-                    username=message.from_user.username
-                    if message.from_user.username
-                    else message.from_user.full_name,
+                    username=(
+                        message.from_user.username
+                        if message.from_user.username
+                        else message.from_user.full_name
+                    ),
                 ),
                 parse_mode=types.ParseMode.HTML,
                 reply_markup=await inline.admin_support_question_notification_keyboard(
                     language_code=admin_user.language_code,
                     from_user=message.from_user.id,
-                    question=forwarded_message.text
-                    if forwarded_message.text
-                    else forwarded_message.caption,
+                    question=(
+                        forwarded_message.text
+                        if forwarded_message.text
+                        else forwarded_message.caption
+                    ),
                 ),
             )
         except BotBlocked as e:

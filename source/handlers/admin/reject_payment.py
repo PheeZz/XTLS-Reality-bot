@@ -1,9 +1,9 @@
-from source.utils import localizer
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 
-from source.keyboard import inline
 from loader import db_manager
+from source.keyboard import inline
+from source.utils import localizer
 
 
 async def reject_incoming_payment(call: types.CallbackQuery, state: FSMContext):

@@ -1,7 +1,9 @@
-from loguru import logger
-from source.data import Configuration
-import asyncpg
 import os
+
+import asyncpg
+from loguru import logger
+
+from source.data import Configuration
 
 
 class DatabaseConnector(Configuration):
@@ -61,9 +63,7 @@ class DatabaseConnector(Configuration):
 
         return result
 
-    async def _execute_query_with_returning_one(
-        self, query: str, *args
-    ) -> asyncpg.Record | bool:
+    async def _execute_query_with_returning_one(self, query: str, *args) -> asyncpg.Record | bool:
         """Executes query and returns first row of result or None if error occurred
 
         Args:

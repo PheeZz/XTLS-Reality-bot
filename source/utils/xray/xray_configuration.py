@@ -1,13 +1,15 @@
-import os
 import json
+import os
+from copy import deepcopy
+from pprint import pprint
+
 import aiofiles
 from loguru import logger
 
-from .credentials_generator import CredentialsGenerator
-from source.data import config
 from loader import db_manager
-from pprint import pprint
-from copy import deepcopy
+from source.data import config
+
+from .credentials_generator import CredentialsGenerator
 
 
 class XrayConfiguration:
@@ -46,9 +48,7 @@ class XrayConfiguration:
         Returns:
             str: user config as link string
         """
-        credentials = CredentialsGenerator().generate_new_person(
-            user_telegram_id=user_telegram_id
-        )
+        credentials = CredentialsGenerator().generate_new_person(user_telegram_id=user_telegram_id)
         config = await self._load_server_config()
         updated_config = deepcopy(config)
         updated_config["inbounds"][0]["settings"]["clients"].append(credentials)
@@ -69,9 +69,7 @@ class XrayConfiguration:
                 credentials["id"], config_name=config_name
             )
 
-    async def create_user_config_as_link_string(
-        self, uuid: str, config_name: str
-    ) -> str:
+    async def create_user_config_as_link_string(self, uuid: str, config_name: str) -> str:
         link = (
             f"vless://{uuid}@{self._server_ip_and_port}"
             f"?security=reality"
@@ -89,9 +87,7 @@ class XrayConfiguration:
 
     async def get_all_uuids(self) -> list[str]:
         config = await self._load_server_config()
-        uuids = [
-            client["id"] for client in config["inbounds"][0]["settings"]["clients"]
-        ]
+        uuids = [client["id"] for client in config["inbounds"][0]["settings"]["clients"]]
         return uuids
 
     async def disconnect_user_by_uuid(self, uuid: str) -> bool:
@@ -159,9 +155,7 @@ class XrayConfiguration:
         Returns:
             bool: True if user was disconnected, False if not
         """
-        user_configs_uuids = await db_manager.get_user_config_names_and_uuids(
-            user_id=telegram_id
-        )
+        user_configs_uuids = await db_manager.get_user_config_names_and_uuids(user_id=telegram_id)
         if user_configs_uuids:
             uuids = [config.config_uuid for config in user_configs_uuids]
             return await self.disconnect_many_uuids(uuids=uuids)

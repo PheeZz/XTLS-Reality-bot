@@ -3,11 +3,10 @@ from datetime import datetime
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 
+from loader import bot, db_manager
 from source.keyboard import inline
-from source.utils.states.admin import GetUserInfo
 from source.utils import localizer
-
-from loader import db_manager, bot
+from source.utils.states.admin import GetUserInfo
 
 
 async def show_info_about_user(
@@ -37,15 +36,11 @@ async def show_info_about_user(
 
 async def create_user_info_message_text(user_id: int) -> str:
     db_user_info = await db_manager.get_user_by_id(user_id=user_id)
-    subscription_days_left = (
-        db_user_info.subscription_end_date - datetime.now().date()
-    ).days
+    subscription_days_left = (db_user_info.subscription_end_date - datetime.now().date()).days
     if subscription_days_left < 0:
         subscription_days_left = 0
 
-    language_code = (
-        await bot.get_chat_member(chat_id=user_id, user_id=user_id)
-    ).user.language_code
+    language_code = (await bot.get_chat_member(chat_id=user_id, user_id=user_id)).user.language_code
     text = localizer.get_user_localized_text(
         user_language_code=language_code,
         text_localization=localizer.message.user_info,

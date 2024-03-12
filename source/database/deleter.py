@@ -1,4 +1,5 @@
 from loguru import logger
+
 from .connector import DatabaseConnector
 
 
@@ -23,9 +24,7 @@ class Deleter(DatabaseConnector):
         await self._execute_query(query)
         logger.debug(f"VPN configs {uuids} were deleted")
 
-    async def delete_many_vpn_configs_by_user_telegram_id(
-        self, telegram_id: int
-    ) -> None:
+    async def delete_many_vpn_configs_by_user_telegram_id(self, telegram_id: int) -> None:
         query = f"""--sql
             DELETE FROM vpn_configs
             WHERE user_id = {telegram_id};

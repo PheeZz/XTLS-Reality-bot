@@ -1,4 +1,5 @@
 from loguru import logger
+
 from .connector import DatabaseConnector
 
 
@@ -22,9 +23,7 @@ class Updater(DatabaseConnector):
             WHERE user_id = {user_id};
         """
         if await self._execute_query(query) is False:
-            logger.error(
-                f"Error while adding {days} days to user {user_id} subscription"
-            )
+            logger.error(f"Error while adding {days} days to user {user_id} subscription")
             return False
         logger.debug(f"Added {days} days to user {user_id} subscription")
         return True
@@ -54,9 +53,7 @@ class Updater(DatabaseConnector):
             DO UPDATE SET bonus_config_count = {new_bonus_config_count};
         """
         if await self._execute_query(query) is False:
-            logger.error(
-                f"Error while setting bonus config generations to user {user_id}"
-            )
+            logger.error(f"Error while setting bonus config generations to user {user_id}")
             return False
         logger.debug(f"Set bonus config generations to user {user_id}")
         return True

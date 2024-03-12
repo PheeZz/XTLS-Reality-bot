@@ -1,14 +1,14 @@
 from aiogram import Dispatcher
 from loguru import logger
 
-from .accept_payment import *
-from .reject_payment import *
-from .delete_keyboard import *
-from .answer_support import *
-from .show_stats import *
-
-from .show_user import register_admin_show_user_handlers
 from source.utils.callback import support_callback
+
+from .accept_payment import *
+from .answer_support import *
+from .delete_keyboard import *
+from .reject_payment import *
+from .show_stats import *
+from .show_user import register_admin_show_user_handlers
 
 
 def register_admin_handlers(dp: Dispatcher):

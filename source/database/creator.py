@@ -1,4 +1,5 @@
 from loguru import logger
+
 from .connector import DatabaseConnector
 
 

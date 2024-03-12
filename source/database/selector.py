@@ -1,8 +1,11 @@
-from loguru import logger
-from .connector import DatabaseConnector
-from source.utils.models import UserInfo, VpnConfigDB, GlobalStatistics
 from datetime import datetime
+
+from loguru import logger
+
 from source.data import config
+from source.utils.models import GlobalStatistics, UserInfo, VpnConfigDB
+
+from .connector import DatabaseConnector
 
 
 class Selector(DatabaseConnector):
@@ -19,14 +22,10 @@ class Selector(DatabaseConnector):
         ) = await self._get_user_base_info_by_id(user_id)
         if not created_at:
             raise ValueError(f"User {user_id} not found")
-        created_configs_count = await self._get_created_configs_count_by_user_id(
-            user_id
-        )
+        created_configs_count = await self._get_created_configs_count_by_user_id(user_id)
         bonus_configs_count = await self._get_bonus_configs_count_by_user_id(user_id)
         unused_configs_count = (
-            config.default_max_configs_count
-            + bonus_configs_count
-            - created_configs_count
+            config.default_max_configs_count + bonus_configs_count - created_configs_count
         )
         is_active_subscription: bool = subscription_end_date >= datetime.now().date()
         user = UserInfo(
@@ -65,9 +64,7 @@ class Selector(DatabaseConnector):
             WHERE user_id = {user_id};
         """
         result = await self._execute_query(query)
-        logger.debug(
-            f"Created configs count for user {user_id} was fetched: {result[0][0]}"
-        )
+        logger.debug(f"Created configs count for user {user_id} was fetched: {result[0][0]}")
         return result[0][0]
 
     async def _get_bonus_configs_count_by_user_id(self, user_id: int) -> int:
@@ -78,9 +75,7 @@ class Selector(DatabaseConnector):
         """
         result = await self._execute_query(query)
         bonus_configs_count = result[0][0] if result else 0
-        logger.debug(
-            f"Bonus configs count for user {user_id} was fetched: {bonus_configs_count}"
-        )
+        logger.debug(f"Bonus configs count for user {user_id} was fetched: {bonus_configs_count}")
         return bonus_configs_count
 
     async def is_user_registered(self, user_id: int) -> bool:
@@ -107,9 +102,7 @@ class Selector(DatabaseConnector):
         logger.debug(f"User {user_id} have any config: {result[0][0]}")
         return result[0][0]
 
-    async def get_user_config_names_and_uuids(
-        self, user_id: int
-    ) -> list[VpnConfigDB] | None:
+    async def get_user_config_names_and_uuids(self, user_id: int) -> list[VpnConfigDB] | None:
         query = f"""--sql
             SELECT id, config_name, config_uuid
             FROM vpn_configs
@@ -131,20 +124,14 @@ class Selector(DatabaseConnector):
 
     async def get_count_of_configs_user_can_create(self, user_id: int) -> int:
         bonus_configs_count = await self._get_bonus_configs_count_by_user_id(user_id)
-        created_configs_count = await self._get_created_configs_count_by_user_id(
-            user_id
-        )
+        created_configs_count = await self._get_created_configs_count_by_user_id(user_id)
         unused_configs_count = (
-            config.default_max_configs_count
-            + bonus_configs_count
-            - created_configs_count
+            config.default_max_configs_count + bonus_configs_count - created_configs_count
         )
         logger.debug(f"User {user_id} can create {unused_configs_count} more configs")
         return unused_configs_count
 
-    async def check_for_user_has_active_subscription_by_config_uuid(
-        self, config_uuid: str
-    ) -> bool:
+    async def check_for_user_has_active_subscription_by_config_uuid(self, config_uuid: str) -> bool:
         query = f"""--sql
             SELECT EXISTS(
                 SELECT 1
@@ -158,14 +145,10 @@ class Selector(DatabaseConnector):
             );
         """
         result = await self._execute_query(query)
-        logger.debug(
-            f"User with uuid {config_uuid} have active subscription: {result[0][0]}"
-        )
+        logger.debug(f"User with uuid {config_uuid} have active subscription: {result[0][0]}")
         return result[0][0]
 
-    async def check_for_user_has_active_subscription_by_user_id(
-        self, user_id: int
-    ) -> bool:
+    async def check_for_user_has_active_subscription_by_user_id(self, user_id: int) -> bool:
         query = f"""--sql
             SELECT EXISTS(
                 SELECT 1
@@ -178,9 +161,7 @@ class Selector(DatabaseConnector):
         logger.debug(f"User with id {user_id} have active subscription: {result[0][0]}")
         return result[0][0]
 
-    async def get_users_ids_by_configs_uuids(
-        self, configs_uuid: list[str]
-    ) -> list[int]:
+    async def get_users_ids_by_configs_uuids(self, configs_uuid: list[str]) -> list[int]:
         """
         Get users ids by configs uuids
 

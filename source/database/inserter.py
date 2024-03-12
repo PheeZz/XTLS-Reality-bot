@@ -1,4 +1,5 @@
 from loguru import logger
+
 from .connector import DatabaseConnector
 
 
@@ -36,9 +37,7 @@ class Inserter(DatabaseConnector):
 
         logger.debug(f"User {user_id} was upserted")
 
-    async def insert_new_vpn_config(
-        self, user_id: int, config_name: str, config_uuid: str
-    ):
+    async def insert_new_vpn_config(self, user_id: int, config_name: str, config_uuid: str):
         query = f"""--sql
             INSERT INTO vpn_configs (user_id, config_name, config_uuid)
             VALUES ({user_id}, '{config_name}','{config_uuid}');
@@ -55,4 +54,3 @@ class Inserter(DatabaseConnector):
         """
         await self._execute_query(query)
         logger.debug(f"Bonus config count for user {user_id} was upserted: {count}")
-

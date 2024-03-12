@@ -3,14 +3,14 @@ from aiogram.types import ContentType
 from loguru import logger
 
 from source.utils.states.user import PaymentViaBankTransfer
-from .start import *
-from .pay import *
-from .configs_menu.show_configs import *
-from .my_profile import show_my_profile
-from .ask_support import *
 
+from .ask_support import *
 from .configs_menu import register_configs_menu_handlers
+from .configs_menu.show_configs import *
 from .guide import register_show_help_guide_handlers
+from .my_profile import show_my_profile
+from .pay import *
+from .start import *
 
 
 def register_user_handlers(dp: Dispatcher):

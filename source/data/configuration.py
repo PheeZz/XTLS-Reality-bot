@@ -1,8 +1,10 @@
-from dotenv import load_dotenv
-from source.utils import IPInfo
-from flag import flag
-from os import getenv
 import os
+from os import getenv
+
+from dotenv import load_dotenv
+from flag import flag
+
+from source.utils import IPInfo
 
 
 class DotEnvVariableNotFound(Exception):
@@ -21,18 +23,17 @@ class Configuration:
         self._payment_card: str = self._get_payment_card()
         self._user_config_prefix: str = self._get_user_config_prefix()
         self._subscription_monthly_price: str = self._get_subscription_monthly_price()
-        self._database_connection_parameters: dict[
-            str, str
-        ] = self._get_database_connection_parameters()
+        self._database_connection_parameters: dict[str, str] = (
+            self._get_database_connection_parameters()
+        )
         self._xray_publickey: str = self._get_xray_publickey()
         self._xray_shortid: str = self._get_xray_shortid()
         self._xray_config_path: str = self._get_xray_config_path()
-        self._default_max_configs_count: int = (
-            self._get_user_default_max_configs_count()
-        )
+        self._default_max_configs_count: int = self._get_user_default_max_configs_count()
         self._server_ip: str = self._get_server_ip()
         self._server_country: str = self._get_server_country()
         self._xray_sni: str = self._get_xray_sni()
+
     def _get_bot_token(self) -> str:
         bot_token = getenv("TG_BOT_TOKEN")
         if not bot_token:
@@ -170,5 +171,5 @@ class Configuration:
         return self._server_country
 
     @property
-    def xray_sni(self)->str:
+    def xray_sni(self) -> str:
         return self._xray_sni

@@ -1,14 +1,13 @@
-from loguru import logger
-from source.utils import localizer
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 from aiogram.utils.exceptions import BotBlocked
+from loguru import logger
 
-from source.keyboard import inline
 from source.data import config
-from source.utils.states.admin import AnswerSupport
-
+from source.keyboard import inline
 from source.middlewares import rate_limit
+from source.utils import localizer
+from source.utils.states.admin import AnswerSupport
 
 
 @rate_limit(limit=1)

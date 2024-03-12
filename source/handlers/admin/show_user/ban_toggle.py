@@ -1,9 +1,10 @@
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 
-from ..show_user.show_user_profile import show_info_about_user
 from loader import db_manager
 from source.utils.xray import xray_config
+
+from ..show_user.show_user_profile import show_info_about_user
 
 
 async def toggle_ban_for_user(call: types.CallbackQuery, state: FSMContext):

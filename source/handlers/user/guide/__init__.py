@@ -2,8 +2,8 @@ from aiogram import Dispatcher
 from aiogram.types import ContentType
 from loguru import logger
 
-from .guide_menu import show_help_guide
 from .android import show_help_guide_android
+from .guide_menu import show_help_guide
 from .ios import show_help_guide_ios
 from .pc import show_help_guide_pc
 

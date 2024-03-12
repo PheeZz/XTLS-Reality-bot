@@ -2,10 +2,10 @@ from aiogram import Dispatcher
 from aiogram.types import ContentType
 from loguru import logger
 
-from .show_configs import *
 from .create_new_config import *
-from .show_specified_config import *
 from .delete_config import *
+from .show_configs import *
+from .show_specified_config import *
 
 
 def register_configs_menu_handlers(dp: Dispatcher):

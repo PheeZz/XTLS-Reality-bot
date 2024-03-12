@@ -1,9 +1,9 @@
-from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
+from loader import db_manager
 from source.data import config
 from source.utils import localizer
 from source.utils.callback import support_callback
-from loader import db_manager
 
 
 async def insert_button_support(

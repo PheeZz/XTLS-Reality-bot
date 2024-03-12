@@ -14,11 +14,12 @@ async def set_commands(dp):
 
 
 async def on_startup(dp):
-    from source import handlers
-    from source import middlewares
-    from source.utils.shedulers import SubscriptionChecker
-    from loguru import logger
     import time
+
+    from loguru import logger
+
+    from source import handlers, middlewares
+    from source.utils.shedulers import SubscriptionChecker
 
     subscription_checker = SubscriptionChecker()
     middlewares.setup(dp)
@@ -38,6 +39,7 @@ async def on_startup(dp):
 if __name__ == "__main__":
     # Launch
     from aiogram import executor
+
     from source.handlers import dp
 
     executor.start_polling(dp, skip_updates=True, on_startup=on_startup)

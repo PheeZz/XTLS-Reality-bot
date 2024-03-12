@@ -1,13 +1,13 @@
-from apscheduler.schedulers.asyncio import AsyncIOScheduler
-from aiogram.utils.exceptions import BotBlocked
-from loguru import logger
 import asyncio
 
+from aiogram.utils.exceptions import BotBlocked
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
+from loguru import logger
 
-from loader import db_manager, bot
-from source.utils.xray import xray_config
+from loader import bot, db_manager
 from source.utils import localizer
 from source.utils.models import SubscriptionStatus
+from source.utils.xray import xray_config
 
 
 class SubscriptionChecker:
@@ -62,12 +62,10 @@ class SubscriptionChecker:
             status=SubscriptionStatus.two_days_left.value,
         )
 
-    async def _disconnect_expired_configs_and_notify_users(
-        self, configs_uuid: list[str]
-    ):
+    async def _disconnect_expired_configs_and_notify_users(self, configs_uuid: list[str]):
         """Disconnect expired configs and notify their owners about it"""
-        users_ids_with_expired_subscription = (
-            await db_manager.get_users_ids_by_configs_uuids(configs_uuid=configs_uuid)
+        users_ids_with_expired_subscription = await db_manager.get_users_ids_by_configs_uuids(
+            configs_uuid=configs_uuid
         )
         await xray_config.disconnect_many_uuids(uuids=configs_uuid)
         await self._notify_users_about_subscription_status(
@@ -75,9 +73,7 @@ class SubscriptionChecker:
             status=SubscriptionStatus.expired.value,
         )
 
-    async def _notify_users_about_subscription_status(
-        self, users_ids: list[int], status: str
-    ):
+    async def _notify_users_about_subscription_status(self, users_ids: list[int], status: str):
         """Notify users about subscription status
 
         Args:
@@ -98,9 +94,7 @@ class SubscriptionChecker:
                 raise ValueError(f"Unknown subscription status: {status}")
         for user_id in users_ids:
             try:
-                user = (
-                    await bot.get_chat_member(chat_id=user_id, user_id=user_id)
-                ).user
+                user = (await bot.get_chat_member(chat_id=user_id, user_id=user_id)).user
                 await bot.send_message(
                     chat_id=user_id,
                     text=localizer.get_user_localized_text(
@@ -113,9 +107,7 @@ class SubscriptionChecker:
             except Exception as e:
                 logger.error(e)
             else:
-                logger.info(
-                    f"User {user_id} was notified about subscription status: {status}"
-                )
+                logger.info(f"User {user_id} was notified about subscription status: {status}")
             finally:
                 self._messages_limits_counter += 1
                 if self._messages_limits_counter == 20:
