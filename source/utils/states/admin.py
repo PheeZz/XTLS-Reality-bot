@@ -15,3 +15,8 @@ class GiveSubscription(StatesGroup):
 
 class GiveBonusConfigGenerations(StatesGroup):
     wait_for_bonus_config_generations_count = State()
+
+
+class CreateMailing(StatesGroup):
+    wait_for_mailing_message = State()
+    wait_for_confirmation = State()

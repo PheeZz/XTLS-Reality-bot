@@ -71,6 +71,13 @@ async def add_buttons_for_admin_main_menu(keyboard: InlineKeyboardMarkup, langua
             ),
             callback_data="show_statistics",
         ),
+        InlineKeyboardButton(
+            text=localizer.get_user_localized_text(
+                user_language_code=language_code,
+                text_localization=localizer.button.create_mailing,
+            ),
+            callback_data="create_mailing",
+        ),
     ]
     for button in buttons:
         keyboard.insert(button)
@@ -313,4 +320,25 @@ async def download_app_for_connect_to_vpn_keyboard(
     )
     keyboard.insert(button)
     keyboard = await insert_button_back_to_main_menu(keyboard=keyboard, language_code=language_code)
+    return keyboard
+
+
+async def insert_button_confirm_mailing_message(
+    keyboard: InlineKeyboardMarkup | None = None, language_code: str = "ru"
+):
+    if not keyboard:
+        keyboard = InlineKeyboardMarkup(row_width=1)
+    keyboard.add(
+        InlineKeyboardButton(
+            text=localizer.get_user_localized_text(
+                user_language_code=language_code,
+                text_localization=localizer.button.confirm_mailing_message,
+            ),
+            callback_data="confirm_mailing_message",
+        )
+    )
+    keyboard = await insert_button_back_to_main_menu(
+        keyboard=keyboard,
+        language_code=language_code,
+    )
     return keyboard

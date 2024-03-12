@@ -253,3 +253,13 @@ class Selector(DatabaseConnector):
         )
         logger.debug(f"Global stats: {global_stats}")
         return global_stats
+
+    async def get_unblocked_users_ids(self) -> list[int]:
+        query = """--sql
+            SELECT user_id
+            FROM users
+            WHERE is_banned = FALSE;
+        """
+        result = await self._execute_query(query)
+        logger.debug(f"Unblocked users ids: {result}")
+        return [record[0] for record in result]
