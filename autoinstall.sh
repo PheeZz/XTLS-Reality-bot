@@ -280,7 +280,7 @@ git clone https://github.com/PheeZz/XTLS-Reality-bot.git
 
 #create venv and install bot dependencies
 cd ~/XTLS-Reality-bot
-poetry install
+poetry install --no-root
 cd
 
 #configure bot .env file
