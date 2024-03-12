@@ -190,7 +190,7 @@ git clone https://github.com/PheeZz/XTLS-Reality-bot.git
 #### 2.6 Create venv and install python dependencies
 ```bash
 cd XTLS-Reality-bot
-poetry install
+poetry install --no-root
 ```
 
 #### 2.7 Configure .env file
