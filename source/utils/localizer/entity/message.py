@@ -177,3 +177,15 @@ class LocalizedMessageText(BaseLocalizedObject):
     @property
     def help_guide_pc(self) -> LocalizedText:
         return self._get_entity_text("help_guide_pc")
+
+    @property
+    def create_mailing_message(self) -> LocalizedText:
+        return self._get_entity_text("create_mailing_message")
+
+    @property
+    def confirm_mailing_message(self) -> LocalizedText:
+        return self._get_entity_text("confirm_mailing_message")
+
+    @property
+    def mailing_message_sent(self) -> LocalizedText:
+        return self._get_entity_text("mailing_message_sent")

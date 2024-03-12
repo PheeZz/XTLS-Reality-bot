@@ -1,10 +1,16 @@
-from aiogram import Dispatcher
+from aiogram import Dispatcher, types
 from loguru import logger
 
 from source.utils.callback import support_callback
 
 from .accept_payment import *
 from .answer_support import *
+from .create_mailing import (
+    CreateMailing,
+    confirm_mailing_message,
+    create_mailing_message,
+    send_mailing_message,
+)
 from .delete_keyboard import *
 from .reject_payment import *
 from .show_stats import *
@@ -45,6 +51,27 @@ def register_admin_handlers(dp: Dispatcher):
             show_global_stats,
             lambda call: call.data.startswith("show_statistics"),
             state="*",
+        )
+
+        dp.register_callback_query_handler(
+            create_mailing_message,
+            lambda call: call.data.startswith("create_mailing"),
+            state="*",
+        )
+
+        dp.register_message_handler(
+            confirm_mailing_message,
+            state=CreateMailing.wait_for_mailing_message,
+            content_types=[
+                types.ContentType.TEXT,
+                types.ContentType.PHOTO,
+                types.ContentType.VIDEO,
+            ],
+        )
+        dp.register_callback_query_handler(
+            send_mailing_message,
+            lambda call: call.data.startswith("confirm_mailing_message"),
+            state=CreateMailing.wait_for_confirmation,
         )
 
         register_admin_show_user_handlers(dp)

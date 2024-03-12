@@ -93,3 +93,11 @@ class LocalizedButtonText(BaseLocalizedObject):
     @property
     def download_app(self) -> LocalizedText:
         return self._get_entity_text("download_app")
+
+    @property
+    def confirm_mailing_message(self) -> LocalizedText:
+        return self._get_entity_text("confirm_mailing_message")
+
+    @property
+    def create_mailing(self) -> LocalizedText:
+        return self._get_entity_text("create_mailing")
