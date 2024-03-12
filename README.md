@@ -47,7 +47,7 @@ systemctl start postgresql.service
 > python 3.11, pip, poetry
 ```bash
 sudo apt install -y software-properties-common
-add-sudo apt-repository ppa:deadsnakes/ppa
+sudo add-apt-repository ppa:deadsnakes/ppa
 sudo apt update
 sudo apt install -y python3.11 python3.11-dev python3.11-distutils python3.11-venv
 curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
