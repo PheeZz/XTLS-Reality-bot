@@ -1,4 +1,3 @@
-import os
 from os import getenv
 
 from dotenv import load_dotenv
@@ -23,9 +22,9 @@ class Configuration:
         self._payment_card: str = self._get_payment_card()
         self._user_config_prefix: str = self._get_user_config_prefix()
         self._subscription_monthly_price: str = self._get_subscription_monthly_price()
-        self._database_connection_parameters: dict[str, str] = (
-            self._get_database_connection_parameters()
-        )
+        self._database_connection_parameters: dict[
+            str, str
+        ] = self._get_database_connection_parameters()
         self._xray_publickey: str = self._get_xray_publickey()
         self._xray_shortid: str = self._get_xray_shortid()
         self._xray_config_path: str = self._get_xray_config_path()

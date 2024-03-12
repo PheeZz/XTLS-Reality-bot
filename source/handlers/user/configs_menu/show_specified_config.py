@@ -3,12 +3,9 @@ from aiogram.dispatcher import FSMContext
 
 from loader import db_manager
 from source.keyboard import inline
-from source.middlewares import rate_limit
 from source.utils import localizer
 from source.utils.qr_generator import create_qr_code_from_config_as_link_str
 from source.utils.xray import xray_config
-
-from ..check_is_user_banned import is_user_banned
 
 
 async def show_specified_config(call: types.CallbackQuery, state: FSMContext):
