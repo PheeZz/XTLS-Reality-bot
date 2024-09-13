@@ -16,7 +16,7 @@
 
 </div>
 
-## ❗️Attention: project unmaintained
+## ❗️Attention: project unmaintained. Please do not use it to bypass your country blocks.
 
 
 ## Tested on
