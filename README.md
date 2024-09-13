@@ -256,13 +256,3 @@ WantedBy=multi-user.target
 systemctl enable xtls-reality-bot.service
 systemctl start xtls-reality-bot.service
 ```
-
-#### Finally, you can use your bot and enjoy it ❤️
-
-#### Troubleshooting
-- On some systems may require to change postgresql database encoding (in case of config names are in any language other than English). <b>StackOverflow</b>: [Postgres issue encoding "UTF8" has no equivalent in encoding "LATIN1"](https://stackoverflow.com/questions/14525505/postgres-issue-encoding-utf8-has-no-equivalent-in-encoding-latin1)
-- If some error with XRAY occurred try this guides (RU): <br>
-  1. [Bleeding-edge обход блокировок с полной маскировкой: настраиваем сервер и клиент XRay с XTLS-Reality быстро и просто](https://habr.com/ru/articles/731608/)
-  2. [3X-UI: Shadowsocks-2022 & XRay (XTLS) сервер с простой настройкой и приятным интерфейсом](https://habr.com/ru/articles/735536/)
-  3. [Обход блокировок: настройка сервера XRay для Shadowsocks-2022 и VLESS с XTLS-Vision, Websockets и фейковым веб-сайтом](https://habr.com/ru/articles/728836/)
-
